@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Комментарии</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+                body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .comment {
+            margin-bottom: 20px;
+        }
+        .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-header {
+        background-color: #f0f0f0;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .card-text {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .fw-bold {
+        color: #007bff;
+    }
+
+    .text-muted {
+        font-size: 14px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        border-radius: 5px;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
+    .form-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 90px;
+        border: 2px solid #007bff;
+        border-radius: 10px;
+    }
+    .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .page-item {
+            margin: 0 5px;
+        }
+
+        .page-link {
+            display: block;
+            padding: 10px 15px;
+            color: #007bff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .page-link:hover {
+            color: #0056b3;
+            background-color: #f0f0f0;
+            text-decoration: none;
+        }
+
+        .page-item.active .page-link {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+.btn-primary
+{
+    margin-left: 1008px;
+}
+.container
+{
+    
+    border: 4px solid #FFD400;
+    padding: 40px;
+}
+/* .container form
+{
+    padding-left: 40px;
+} */
+::-webkit-input-placeholder {
+text-align:center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align:center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align:center;  
+}
+
+:-ms-input-placeholder {  
+   text-align:center; 
+}
+@import 'https://fonts.googleapis.com/css?family=Poppins:400,500';
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;200;300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Mea Culpa");
+@import url('https://fonts.googleapis.com/css2?family=Dancing Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Source+Code+Pro');
+@import url('https://fonts.googleapis.com/css2?family=Beau Rivage&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin Sans&family=Source+Code+Pro');
+@import url('https://fonts.googleapis.com/css2?family=Borel&family=Cormorant+Upright&display=swap');
+/* background: radial-gradient(rgb(192, 228, 255), rgb(174, 16, 108)); */
+
+@import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+body {
+  margin:0;
+}
+
+h1 {
+  font-family: 'Dancing Script', sans-serif;
+  font-weight:300;
+  letter-spacing: 2px;
+  font-size:48px;
+
+}
+p {
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 1px;
+  font-size:14px;
+  color: #333333;
+}
+
+.header {
+  position:relative;
+  text-align:center;
+  background: linear-gradient(60deg, rgb(54, 218, 204) 0%, rgb(8, 88, 98) 100%);
+  color:white;
+}
+
+.inner-header {
+  height:15vh;
+  width:100%;
+  margin: 0;
+  padding: 0;
+}
+
+.flex { /*Flexbox for containers*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.waves {
+  position:relative;
+  width: 100%;
+  height:5vh;
+  margin-bottom:-10px; /*Fix for safari gap*/
+  min-height:100px;
+  max-height:150px;
+}
+
+.content {
+  position:relative;
+  height:20vh;
+  text-align:center;
+  background-color: white;
+}
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+  .waves {
+    height:40px;
+    min-height:40px;
+  }
+  .content {
+    height:30vh;
+  }
+  h1 {
+    font-size:24px;
+  }
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="header">
+
+            <!--Content before waves-->
+            <div class="inner-header flex">
+            <h1 class="mt-2">Тикет: {{ ticket.title }}</h1>
+        </div>
+        
+        <!--Waves Container-->
+        <div>
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+        </g>
+        </svg>
+        </div>
+        <!--Waves end-->
+        
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            <div class=“form-container”>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="comment-textarea" class="form-label"></label>
+                <textarea class="form-control" id="comment-textarea" name="text" placeholder="Введите ваши комментарии здесь" rows="6" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="file-input" class="form-label">Выберите файл</label>
+                <input type="file" class="form-control" id="file-input" name="file" accept=".pdf, .doc, .docx, .txt" multiple>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+
+    
+
+    <div id="comments-container" class="mt-4">
+            {% for comment in comments%}
+            <div class="comment">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="fw-bold">{{ comment.user.username }}</span>
+                        <span class="text-muted">{{ comment.created_at }}</span>
+                        
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ comment.text }}</p>
+                        {% if comment.commentfile_set.all %}
+                        <div class="mt-3">
+                            <ul class="list-unstyled">
+                                {% for file in comment.commentfile_set.all %}
+                                <li>
+                                    <a href="{{ file.file.url }}" download>{{ file.file.name }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            {% if comments.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page=1"><< Первая</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ comments.previous_page_number }}"> <Предыдущая</a></li>
+            {% endif %}
+            
+            <li class="page-item active"><a class="page-link" href="#">Страница {{ comments.number }} из {{ comments.paginator.num_pages }}.</a></li>
+          
+            {% if comments.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{ comments.next_page_number }}">Следующая ></a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ comments.paginator.num_pages }}">Последняя >></a></li>
+            {% endif %}
+          </div>
+    </div>
+    
+    <script>
+
+    </script>
+    </body>
+</html>

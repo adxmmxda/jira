@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Комментарии</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.4/dist/flowbite.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+                body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+    .card-text {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+
+
+
+
+    .form-control {
+        border-radius: 5px;
+        border:4px solid #4245a8;
+
+    }
+
+    .btn-primary {
+    border-radius: 8px;
+    font-weight: 400;
+    background-color: #4245a8;
+    border: 2px solid #4245a8;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2e3092; /* Darker shade on hover */
+    border-color: #2e3092; /* Darker shade on hover */
+}
+    .form-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 90px;
+        border: 23px solid #616161;
+        border-radius: 10px;
+    }
+    .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .page-item {
+            margin: 0 5px;
+        }
+
+        .page-link {
+            display: block;
+            padding: 10px 15px;
+            color: #007bff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .page-link:hover {
+            color: #0056b3;
+            background-color: #f0f0f0;
+            text-decoration: none;
+        }
+
+        .page-item.active .page-link {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+.btn-primary
+{
+    margin-left: 680px;
+    margin-top: -125px;
+}
+.container
+{
+    
+    border: 4px solid #FFD400;
+    padding: 40px;
+}
+/* .container form
+{
+    padding-left: 40px;
+} */
+::-webkit-input-placeholder {
+text-align:center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align:center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align:center;  
+}
+.text-muted {
+        font-size: 14px;
+    }
+    
+    
+    .fw-bold {
+        color: #007bff;
+    }
+
+:-ms-input-placeholder {  
+   text-align:center; 
+}
+@import 'https://fonts.googleapis.com/css?family=Poppins:400,500';
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;200;300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Mea Culpa");
+@import url('https://fonts.googleapis.com/css2?family=Dancing Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Source+Code+Pro');
+@import url('https://fonts.googleapis.com/css2?family=Beau Rivage&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin Sans&family=Source+Code+Pro');
+@import url('https://fonts.googleapis.com/css2?family=Borel&family=Cormorant+Upright&display=swap');
+/* background: radial-gradient(rgb(192, 228, 255), rgb(174, 16, 108)); */
+
+@import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+body {
+  margin:0;
+}
+
+h1 {
+  font-family: 'Dancing Script', sans-serif;
+  font-weight:300;
+  letter-spacing: 2px;
+  font-size:48px;
+
+}
+p {
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 1px;
+  font-size:14px;
+  color: #333333;
+}
+
+.header {
+  position:relative;
+  text-align:center;
+  background: linear-gradient( #4e54c8 , #4e54c8);
+  color:white;
+}
+
+.inner-header {
+  height:15vh;
+  width:100%;
+  margin: 0;
+  padding: 0;
+}
+
+.flex { /*Flexbox for containers*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+
+.content {
+  position:relative;
+  height:20vh;
+  text-align:center;
+  background-color: white;
+}
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+  .waves {
+    height:40px;
+    min-height:40px;
+  }
+  .content {
+    height:30vh;
+  }
+  h1 {
+    font-size:24px;
+  }
+}
+/*
+** reseting 
+*/
+body{
+  background: #e0e3e6;
+}
+a{
+  color: #4245a8;
+  font-family: tahoma;
+}
+/*
+** timeline css codes
+*/
+.comments{
+  
+  width: 700px;
+  margin:20px auto;
+  padding: 0px 10px 0px 50px;
+  border-left: 2px solid #000000;
+}
+p{
+  padding: 20px;
+  background: #ffe7d9;
+  color: #000000;
+  font-family: tahoma;
+  line-height: 1.7;
+  position: relative;
+}
+p > span {
+    display: block;
+    padding: 5px 5px 10px 5px;
+    color: #000000;
+    font-style: italic;
+    font-size: 13px;
+}
+
+p > button{
+  background: #2ecc71;
+  color: #fff;
+  width: 100px;
+  padding: 10px;
+  border-radius: 2px;
+  border: 0;
+  font-weight: bold;
+  cursor: pointer;
+}
+p:before{
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #514644;
+  top: -9px;
+  left: -61px;
+  position: absolute;
+}
+p:after{
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: #514644 #514644 transparent       transparent ;
+  border-width: 15px;
+  position: absolute;
+  top: 0px;
+  left: -29px;
+}
+body {
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.file-input {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.file-input__input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.file-input__label {
+  cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 8px; /* Adjusted border radius for consistency */
+    font-size: 16px; /* Same font size */
+    font-weight: 400;
+    color: #fff;
+    padding: 10px 20px; /* Same padding */
+    background-color: #4245a8;
+    border: 2px solid #4245a8;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.file-input__label:hover {
+    background-color: #33368a; /* Darker shade on hover */
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3); /* Increased shadow on hover */
+}
+
+.file-input__label svg {
+  height: 16px;
+  margin-right: 4px;
+}
+
+.form-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.selected-file-info {
+  display: none;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #555;
+  border: 2px solid #4caf50;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.selected-file-info.active {
+  display: block;
+}
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    font-family: 'Exo', sans-serif;
+}
+
+
+.context {
+  
+    width: 100%;
+    position: absolute;
+    top:8vh;
+    
+}
+
+.context h1{
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+}
+
+
+.area{
+  border-radius: 10px;
+    background: #4e54c8;  
+    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
+    width: 100%;
+    height:30vh;
+    
+   
+}
+
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: #47D691;
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 90px;
+    height: 90px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+.form-control {
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    padding: 14px;
+    font-size: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Стили для состояния фокуса */
+.form-control:focus {
+    outline: none;
+    border-color: #8a63e5;
+    box-shadow: 0 0 0 3px rgba(138, 99, 229, 0.4);
+}
+
+/* Стили для текста placeholder */
+.form-control::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Стили для состояния наведения */
+.form-control:hover {
+    border-color: #999;
+}
+.comment-text {
+        color: inherit; /* Наследовать цвет текста от родительского элемента */
+    }
+    hr {
+  display: block;
+  margin: 50px 0 -15px;
+  width: 100%;
+  height: 1px;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+hr + h2 {
+  display: inline-block;
+  position: relative;
+  left: 50%;
+  margin: 0;
+  padding: 5px 10px;
+  border: 1px solid #453986;
+  transform: translateX(-50%);
+  color: #453986;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #fff;
+}
+hr + h2::first-letter {
+  margin-left: 0.32em;
+}
+
+/* Alternative transform: translate */
+hr + h2 {
+  border-width: 1px 0;
+}
+hr + h2::before, hr + h2::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #453986;
+  content: "";
+}
+hr + h2::before {
+  left: 0;
+}
+hr + h2::after {
+  right: 0;
+}
+
+/**/
+* {
+  box-sizing: border-box;
+}
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="header">
+
+               <div class="context">
+        <h1 class="mt-2">Тикет: {{ ticket.title }}</h1>
+    </div>
+
+
+<div class="area" >
+            <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+          </div >
+        </div>
+        <form method="post" enctype="multipart/form-data" action="{% url 'add_comment' ticket_id=ticket.id %}?page=1">     
+          <!-- <form method="post" enctype="multipart/form-data" hx-post="{% url 'add_comment' ticket_id=ticket.id %}" hx-target="#comments-container" hx-swap="outerHTML">       -->
+
+            {% csrf_token %}
+            <div class=“form-container”>
+              <div class="mb-3">
+                <div class="max-w-2xl mx-auto">
+                  <div class="mt-3">
+                  <label for="comment-textarea" class="form-label"></label>
+                  
+                      <div class="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+                          <div class="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
+                              <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
+                                  <div class="flex items-center space-x-1 sm:pr-4">
+                                    <label for="file-input" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"></path></svg>
+                                      <input type="file" name="file" id="file-input" style="display: none;">
+                                  </label>
+                                  <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600" onclick="changeTextColor()">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                                </button>
+                                      <label for="image-input" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>
+                                        <input type="file" name="file" id="image-input" style="display: none;" accept="image/*">
+                                    </label>
+                                      <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                      <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                  </div>
+                                  <div class="flex flex-wrap items-center space-x-1 sm:pl-4">
+                                      <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                      <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>       
+                                      </button>
+                                      <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>     
+                                      </button>
+                                      <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                  </div>
+                              </div>
+                              <button type="button" data-tooltip-target="tooltip-fullscreen" class="p-2 text-gray-500 rounded cursor-pointer sm:ml-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                              </button>
+                              <div id="tooltip-fullscreen" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700">
+                                  Show full screen
+                                  <div class="tooltip-arrow" data-popper-arrow></div>
+                              </div>
+                          </div>
+                          <div class="py-2 px-4 bg-white rounded-b-lg dark:bg-gray-800">
+                              
+                              <textarea id="comment-form" name="text" rows="8" class="block px-0 w-full text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write an article..." required></textarea>
+                          </div>
+                      </div>
+                      <form action="{% url 'add_comment' ticket_id=ticket.id %}?page=1" method="post">
+                        {% csrf_token %}
+                
+                      </button>
+                    
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                  </div>
+                  </div>
+              </form>
+
+                <div class="mb-3">
+                  
+                  <div class="file-input">
+                    <input
+                    type="file"
+                    name="file"
+                    id="file-input"
+                    class="file-input__input"
+                    multiple
+                    onchange="displaySelectedFile()"
+                    />
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      data-prefix="fas"
+                      data-icon="upload"
+                      class="svg-inline--fa fa-upload fa-w-16"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                      >
+                      <path 
+                      fill="currentColor"
+                      d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
+                      ></path>
+                    </svg>
+                    <!-- <span class="upload-btn">Загрузить файл</span>
+                     -->
+                    </label
+                    ><div class="form-info">
+                      
+                      <div class="selected-file-info" id="selected-file-info"></div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                </div>
+              </form>
+                
+                
+            
+        
+          </div>
+  
+
+    
+          <s class="para"></s>
+          <hr/>
+         <h2>Comments </h2>
+         <br/>	<br/> <br/> 
+          <div id="comments-container" class="mt-4">
+            {% for comment in comments %}
+                <div class="comments">
+                    <p>
+                        <span class="fw-bold">{{ comment.user.username }}</span>
+                        <span class="comment-text">{{ comment.text }}</span>
+                        <span class="text-muted">{{ comment.created_at }}</span>
+                    </p>
+                    {% if comment.commentfile_set.all %}
+                        <div class="mt-3">
+                            <ul>
+                                {% for file in comment.commentfile_set.all %}
+                                    <li>
+                                      <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 ">
+                                        <a href="{{ file.file.url }}" download>{{ file.file.name }}</a>
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                      </button>
+                                        
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        
+        
+        <div class="pagination">
+            {% if comments.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page=1"><< Первая</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ comments.previous_page_number }}"> <Предыдущая</a></li>
+            {% endif %}
+            
+            <li class="page-item active"><a class="page-link" href="#">Страница {{ comments.number }} из {{ comments.paginator.num_pages }}.</a></li>
+          
+            {% if comments.has_next %}
+              <li class="page-item"><a class="page-link" href="?page={{ comments.next_page_number }}">Следующая ></a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ comments.paginator.num_pages }}">Последняя >></a></li>
+            {% endif %}
+          </div>
+    </div>
+    
+    <script>
+      // function changeTextColor() {
+      //     var textArea = document.getElementById('comment-form'); // Получаем текстовое поле
+      //     var currentColor = window.getComputedStyle(textArea).color; // Получаем текущий цвет текста
+      //     if (currentColor === 'rgb(85, 85, 85)') { // Если текущий цвет текста серый
+      //         textArea.style.color = 'red'; // Меняем цвет текста на красный
+      //         textArea.style.transition = 'color 0.5s ease-in-out'; // Добавляем анимацию
+      //     } else {
+      //         textArea.style.color = 'rgb(85, 85, 85)'; // В противном случае меняем цвет текста на серый
+      //         textArea.style.transition = 'color 0.5s ease-in-out'; // Добавляем анимацию
+      //     }
+      // }
+        
+  </script>
+    </body>
+</html>

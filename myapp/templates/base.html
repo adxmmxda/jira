@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block page_title %}Default Title{% endblock %}</title>
+    <style>
+html {
+                position: relative;
+                min-height: 100%;
+        }   
+#menu__toggle {
+  opacity: 0;
+}
+#menu__toggle:checked + .menu__btn > span {
+  transform: rotate(45deg);
+}
+#menu__toggle:checked + .menu__btn > span::before {
+  top: 0;
+  transform: rotate(0deg);
+}
+#menu__toggle:checked + .menu__btn > span::after {
+  top: 0;
+  transform: rotate(90deg);
+}
+#menu__toggle:checked ~ .menu__box {
+  left: auto;
+  right: 0;
+
+}
+.menu__btn {
+    display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px; /* Размещаем кнопку в правом верхнем углу */
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  z-index: 1;
+}
+.menu__btn > span,
+.menu__btn > span::before,
+.menu__btn > span::after {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #616161;
+  transition-duration: .25s;
+}
+.menu__btn > span::before {
+  content: '';
+  top: -8px;
+}
+.menu__btn > span::after {
+  content: '';
+  top: 8px;
+}
+.menu__box {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 300px;
+  height: 17%;
+  margin: 0;
+  padding: 80px 0;
+  list-style: none;
+  background-color: #ECEFF1;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, .4);
+  transition-duration: .25s;
+}
+.menu__item {
+  display: block;
+  padding: 12px 24px;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition-duration: .25s;
+}
+.menu__item:hover {
+  background-color: #CFD8DC;
+}
+
+
+
+        body {
+        
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .header img { 
+            height: 60px; 
+            
+            float: left; 
+            margin-left: 4px; 
+            margin-top: -20px; } 
+        .header h1 { 
+            position: relative; 
+            float: right; 
+            margin-right: 20px; 
+            margin-top: 20px; 
+            font-family: Arial, Helvetica, sans-serif; 
+            font-weight: bold; }
+        #logout-button {
+            display: none; /* Изначально скрываем кнопку */
+            position: absolute; /* Абсолютная позиция */
+            top: 100%; /* Относительно нижней грани иконки меню */
+            left: 50%; /* По горизонтали в середине страницы */
+            transform: translateX(-50%); /* Центрирование по горизонтали */ 
+            background-color: #041e09; 
+            color: #ffffff; 
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 8px 13px;
+            transition: background-color 0.3s ease;
+}
+.header { 
+
+    background-color: #e4e3e3;
+    width: 100%; 
+    height: 120px; 
+    color: #ffffff; 
+    font-size: 24px; 
+    text-align: center; 
+    border-radius: 10px; 
+  }
+
+        
+        .footer {   
+            background-color: #65aca4;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            left: 0px;
+            bottom:0px;
+            height:0px;
+            width:100%;
+            right: 0; 
+        }
+
+        
+        .table-list {
+          display: none;
+            position: absolute;
+            float: left;
+            width: 200px;
+            height: 100%; 
+            padding: 10px;
+            margin-top: 14px;
+            background-color: #f9f9f9;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        .table-list a {
+            display: block;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #ffffff; 
+            background-color: #337ab7; 
+            border: 1px solid #ffffff; 
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .table-list a:hover {
+            background-color: #23527c; 
+        }   
+        .user_tickets {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .user_tickets h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .user_tickets ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .user_tickets li {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 15px;
+        }
+
+        .user_tickets strong {
+            font-weight: bold;
+        }
+
+        .user_tickets form {
+            margin-top: 10px;
+        }
+
+        .user_tickets button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .user_tickets button:hover {
+            background-color: #0056b3;
+        }
+
+        .user_tickets .delete-button {
+            background-color: #dc3545;
+        }
+
+        .user_tickets .delete-button:hover {
+            background-color: #c82333;
+        }
+        hr {
+            margin-top: -1px;  
+        }
+        @import url('https://fonts.googleapis.com/css?family=Ubuntu+Condensed');
+.menu-main {
+  list-style: none;
+  margin: 40px 0 5px;
+  padding: 25px 0 5px;
+  text-align: center;
+  background: #e4e3e3;
+}
+.menu-main li {display: inline-block;}
+.menu-main li:after {
+  content: "|";
+  color: #606060;
+  display: inline-block;
+  vertical-align:top;
+}
+.menu-main li:last-child:after {content: none;}
+.menu-main a {
+  text-decoration: none;
+  font-family: 'Ubuntu Condensed', sans-serif;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 20px;
+  margin: 0 34px 0 30px;
+  font-size: 17px;
+  text-transform: uppercase;
+  display: inline-block;
+  transition: color .2s;
+}
+.menu-main a, .menu-main a:visited {color: black;}
+.menu-main a.current, .menu-main a:hover{color: #feb386;}
+.menu-main a:before,
+.menu-main a:after {
+  content: "";
+  position: absolute;
+  height: 4px;
+  top: auto;
+  right: 50%;
+  bottom: -5px;
+  left: 50%;
+  background: #feb386;
+  transition: .8s;
+}
+.menu-main a:hover:before, .menu-main .current:before {left: 0;}
+.menu-main a:hover:after, .menu-main .current:after {right: 0;}   
+@media (max-width: 550px) {
+.menu-main {padding-top: 0;}
+.menu-main li {display: block;}
+.menu-main li:after {content: none;}
+.menu-main a {
+  padding: 25px 0 20px; 
+  margin: 0 30px;
+}
+}
+.ly_header {
+  background-color: rgb(246, 245, 245);
+  padding-top: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.ly_header_inner {
+  max-width: 1230px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.bl_headerUtils {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.bl_headerUtils_logo {
+  width: 150px;
+}
+
+.bl_headerUtils .el_btn {
+  width: auto;
+  padding: 10px 20px;
+  box-shadow: none;
+}
+
+.bl_headerNav {
+  
+  display: flex;
+  justify-content: space-around;
+}
+
+.bl_headerNav_item {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.bl_headerNav_item:last-child .bl_headerNav_link::after {
+  content: none;
+}
+
+.bl_headerNav_link {
+  position: relative;
+  display: block;
+  padding: 15px 5px;
+  border-bottom: 4px solid transparent;
+  color: #222;
+  text-decoration: none;
+  transition: .25s;
+}
+
+.bl_headerNav_link:focus,
+.bl_headerNav_link:hover {
+  border-bottom-color: #FFD400;
+  text-decoration: none;
+}
+
+.bl_headerNav_link::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 1px;
+  height: 20px;
+  background-color: #ddd;
+  transform: translateY(-50%);
+}
+
+.el_btn {
+  display: none;
+  width: 300px;
+  max-width: 100%;
+  padding: 20px 10px;
+  background-color: #e25c00;
+  border: 2px solid transparent;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+  color: #fff;
+  font-size: 1.125rem;
+  text-align: center;
+  text-decoration: none;
+  transition: .25s;
+}
+
+.el_btn:focus,
+.el_btn:hover {
+  background-color: #fff;
+  border-color: currentColor;
+  color: #e25c00;
+}
+
+.main{
+  height: 50vh;
+}
+.hover-effect1 {
+  min-height: 20px;
+  background: #F44336;
+  text-align: center;
+}
+.hover-effect1 ul {
+ padding-top: 1px;
+}
+.hover-effect1 ul li {
+ display: inline-block;
+}
+.hover-effect1 ul li a {
+ font-size: 30px;
+ text-align: center;
+ color: #fff;
+ margin: 0px 10px;
+ line-height: 50px;
+ display: inline-block;
+ width: 50px;
+ height: 50px;
+ background:#dc3545;
+ -webkit-transition: all .6s ease;
+ -moz-transition: all .6s ease;
+ -ms-transition: all .6s ease;
+ -o-transition: all .6s ease;
+ transition: all .6s ease;
+}
+.hover-effect1 ul li:hover a {
+  border-radius: 50%;
+  background: #dc3545;
+ -moz-transform: rotate(360deg);
+ -webkit-transform: rotate(360deg);
+ -o-transform: rotate(360deg);
+ -ms-transform: rotate(360deg);
+ transform: rotate(360deg);
+}
+p  {
+
+  margin-top: 40px;
+  
+
+}
+h5 {
+  text-align: center;
+  
+}
+h6 {
+  text-align: center;
+}
+
+    </style>
+</head>
+
+
+
+<body>
+  <header class="ly_header">
+    <div class="ly_header_inner">
+      <div class="bl_headerUtils">
+        <a class="bl_headerUtils_logo" href="https://www.spitamenbank.tj/"><img src="https://www.spitamenbank.tj/local/templates/sb-main-template/img/logo/logo-horizontal-ru.svg" ></a>
+       <a class="el_btn" href="#" data-toggle="modal" data-target="#profileModal">Модальное окно</a>
+       <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+                        </div> 
+    
+          
+    </div>
+      </div>
+      <!-- /.bl_headerUtils -->
+      <nav>
+        <ul class="bl_headerNav">
+          <li class="bl_headerNav_item">
+            <a class="bl_headerNav_link" href="{% url 'user_tickets' %}">My Tickets</a>
+          </li>
+          <li class="bl_headerNav_item">
+            <a class="bl_headerNav_link" href="{% url 'tickets' %}">Add Ticket</a>
+          </li>
+          <li class="bl_headerNav_item">
+            <a class="bl_headerNav_link" href="https://www.spitamenbank.tj/">Главная страница</a>
+          </li>
+          <li class="bl_headerNav_item">
+            <a class="bl_headerNav_link" href="{% url 'login' %}">Выход</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <!-- /.ly_header_inner -->
+  </header>
+            
+
+    
+
+<div class="table-list">
+    <h2></h2>
+    {% url 'tickets' as tickets_url %}
+    {% url 'user_tickets' as user_tickets_url %}
+    
+    {% if request.path == tickets_url %}
+        <a href="{% url 'tickets' %}">Tickets</a>
+        <a href="{% url 'user_tickets' %}"> My Tickets</a>
+        <a href="{% url 'projects' %}">Projects</a>
+
+    {% endif %}
+</div>  
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <meta name="viewport" content="width=device-width" />
+    <!--Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!--Fontawesome-->
+ <script src="https://kit.fontawesome.com/4d0b4c932e.js" crossorigin="anonymous"></script>
+    
+
+    <div class="main"></div>
+    <footer id="Footer"style="background-color:#b3b3cc;" class="page-footer font-small stylish-color-dark pt-4">
+      <div style="background-color:#b3b3cc;" class="container text-center text-md-left">
+        <div class="row">
+          <div class="col-md-4 mx-auto">
+            <!-- Content -->
+            <h5 class="text-uppercase font-weight-bold mt-200 mb-4">О Банке</h5>
+            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 70px;">
+            <p>Закрытое Акционерное Общество «Спитамен Банк» начало свою деятельность в 2008 году, в качестве микрокредитной депозитной организации (МДО).</p>
+          </div>
+          <hr class="clearfix w-100 d-md-none">
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <h6 class="text-uppercase font-weight-bold">Контакты</h6>
+            <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+            <div class="addres">
+            <p>
+              <i class="fas fa-home mr-3"></i> 734064, Республика Таджикистан, г. Душанбе, ул. Шамси, 4</p>
+            <p>
+            </div>
+              <!-- <i class="fas fa-envelope mr-3"></i> collab@codewithfaraz.com</p> -->
+            <p>
+              <i class="fas fa-globe mr-3"></i> +992 44 640 6565</p>
+            <p>
+              <i class="fas fa-phone mr-3"></i>  6565</p>
+          </div>
+          <hr class="clearfix w-100 d-md-none">
+          <div id="link10" class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <h6 class="text-uppercase font-weight-bold "></h6>
+            <hr class="deep-purple accent-2 mb-4 mt-18 d-inline-block mx-auto" style="width: 70px;">
+            <p>
+              <a href="https://www.spitamenbank.tj/ru/news/">Новости</a>
+            </p>
+            <p>
+              <a href="https://www.spitamenbank.tj/ru/about/details/">Реквизиты</a>
+            </p>
+            <p>
+              <a href="https://www.spitamenbank.tj/ru/about/reports/">Отчёты</a>
+            </p>
+            <!-- <p>
+              <a href="#!">Services</a>
+            </p> -->
+          </div>
+          <hr class="clearfix w-100 d-md-none">
+          <div id="link10" class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <h6 class="text-uppercase font-weight-bold"></h6>
+            <hr class="deep-purple accent-2 mb-4 mt-18 d-inline-block mx-auto" style="width: 70px;">
+            <p>
+              <a href="https://www.spitamenbank.tj/ru/about/board/">Руководство</a>
+            </p>
+            <p>
+              <a href="https://www.spitamenbank.tj/ru/about/directors/">Менеджеры и директоры</a>
+            </p>
+            <p>
+              <a href="https://www.spitamenbank.tj/ru/about/structure/">Структура банка</a>
+            </p>
+            <!-- <p>
+              <a href="#!">Help</a>
+            </p> -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Call to action -->
+      <ul style="background-color:#b3b3cc;" class="list-unstyled list-inline text-center py-2">
+        <li class="list-inline-item">
+          <!-- <h5 class="mb-1">Register for free</h5>
+        </li>
+        <li class="list-inline-item">
+          <a href="#Contact" class="btn btn-outline-danger btn-rounded">Sign up!</a> -->
+        </li>
+      </ul>
+      <hr>
+      <!-- Social buttons -->
+      <div class="hover-effect1">
+      <ul  style="background-color:#b3b3cc;" class="list-unstyled list-inline text-center">
+        <li class="list-inline-item">
+          <a href="https://www.facebook.com/spitamenbanktj/" title="Facebook"><i class="fa fa-facebook"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://www.instagram.com/spitamenbanktj/" title="Instagram"><i class="fa fa-instagram"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://www.youtube.com/channel/UCEGu3F4kpjcZctg4NQvKrVQ" title="Youtube"><i class="fa fa-youtube"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://t.me/spitamenbanktj" title="Telegram"><i class="fa fa-telegram"></i></a>
+        </li>
+        <li class="list-inline-item">
+          <a href="https://twitter.com/SpitamenBank" title="Twitter"><i class="fa fa-twitter"></i></a>
+        </li>
+      </ul>
+    </div>
+      <!-- Copyright -->
+      <div  style="background-color:#b3b3cc;" class="footer-copyright text-center py-3">
+        © 2008-2023. ЗАО «Спитамен Банк». Лицензия НБТ №0000001 от 3 января 2014 г.
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
+
+<script>
+    
+    var menuIcon = document.getElementById("menuIcon");
+    var isOpen = false;
+
+    menuIcon.addEventListener("click", function() {
+        var dropdownContent = document.querySelector(".dropdown-content");
+
+        if (isOpen) {
+            
+            dropdownContent.style.animation = "fadeOut 0.5s ease-in-out";
+            setTimeout(function() {
+                dropdownContent.style.display = "none";
+            }, 500);
+        } else {
+
+            dropdownContent.style.animation = "fadeIn 0.5s ease-in-out";
+            dropdownContent.style.display = "block";
+        }
+
+
+        menuIcon.innerHTML = isOpen ? "&#9776;" : "&#10006;";
+        isOpen = !isOpen;
+    });
+</script>

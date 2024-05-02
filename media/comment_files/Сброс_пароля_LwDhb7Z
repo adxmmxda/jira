@@ -1,0 +1,98 @@
+Received: from EX2.spitamen.tj (192.168.0.17) by ex1.spitamen.tj
+ (192.168.0.13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 5 Mar
+ 2024 08:19:00 +0500
+Received: from forward102c.mail.yandex.net (178.154.239.213) by
+ EX2.spitamen.tj (192.168.0.17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
+ Transport; Tue, 5 Mar 2024 08:18:59 +0500
+Received: from mail-nwsmtp-smtp-production-main-39.sas.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-39.sas.yp-c.yandex.net [IPv6:2a02:6b8:c08:1d83:0:640:2ab:0])
+	by forward102c.mail.yandex.net (Yandex) with ESMTPS id B2FE760A4B
+	for <n.akramzoda@spitamen.com>; Tue,  5 Mar 2024 06:18:59 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-39.sas.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id wIVbWeJCbmI0-rVcQlODt;
+	Tue, 05 Mar 2024 06:18:59 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1709608739; bh=N0QRpmy1m1ylqEafaAZxY8UnlR8L9yn37umZhJmRsI0=;
+	h=Message-ID:Date:To:From:Subject;
+	b=keeE+uMMnVR7QWaqMsftRgBw9/NfNpiiEVd+CYWdO6/o03BgQ2UWonbA/IegviIfy
+	 HUb0Ja/BdFx9g8C9N84TIK4XyWvXPptbUfu3Bmj5aBpS7weChB1PeV7QbhGLzjhhDu
+	 DchwiAkvUslBPpKNK//Fw9cdNnMkK84HBAe+t8Y0=
+Authentication-Results: mail-nwsmtp-smtp-production-main-39.sas.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
+Content-Type: multipart/alternative;
+	boundary="===============3334523613553813475=="
+MIME-Version: 1.0
+Subject: =?utf-8?b?0KHQsdGA0L7RgSDQv9Cw0YDQvtC70Y8=?=
+From: <nodir.akramzoda@yandex.ru>
+To: <n.akramzoda@spitamen.com>
+Date: Tue, 5 Mar 2024 03:19:06 +0000
+Message-ID: <170960874668.8248.1071737408081883826@ITSD21923-2>
+Return-Path: nodir.akramzoda@yandex.ru
+X-KSE-ServerInfo: ex1.spitamen.tj, 9
+X-KSE-AntiSpam-Interceptor-Info: scan successful
+X-KSE-AntiSpam-Version: 6.1.0, Database issued on: 03/05/2024 01:44:55
+X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
+X-KSE-AntiSpam-Method: none
+X-KSE-AntiSpam-Rate: 15
+X-KSE-AntiSpam-Info: Lua profiles 183939 [Mar 05 2024]
+X-KSE-AntiSpam-Info: Version: 6.1.0.3
+X-KSE-AntiSpam-Info: Envelope from: nodir.akramzoda@yandex.ru
+X-KSE-AntiSpam-Info: LuaCore: 8 0.3.8 4a99897b35b48c45ee5c877607d26a2d9f419920
+X-KSE-AntiSpam-Info: {rep_avail}
+X-KSE-AntiSpam-Info: {Prob_phishing_engines}
+X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
+X-KSE-AntiSpam-Info: ApMailHostAddress: 178.154.239.213
+X-KSE-AntiSpam-Info: {DNS response errors}
+X-KSE-AntiSpam-Info: Rate: 15
+X-KSE-AntiSpam-Info: Status: not_detected
+X-KSE-AntiSpam-Info: Method: none
+X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=yandex.ru;spf=temperror
+ smtp.mailfrom=yandex.ru;dkim=temperror header.d=yandex.ru
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 03/05/2024 01:50:00
+X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
+ rules found
+X-KSE-Antivirus-Interceptor-Info: scan successful
+X-KSE-Antivirus-Info: Clean, bases: 3/5/2024 12:41:00 AM
+X-KSE-BulkMessagesFiltering-Scan-Result: sender external
+X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
+ rules found
+X-KSE-BulkMessagesFiltering-Scan-Result: sender external
+
+--===============3334523613553813475==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+...
+--===============3334523613553813475==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>=D0=92=D0=BE=D1=81=D1=81=D1=82=D0=B0=D0=BD=D0=BE=D0=B2=D0=BB=D0=
+=B5=D0=BD=D0=B8=D0=B5 =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8F</title>
+
+</head>
+<body>
+    <div class=3D"container">
+        <h2>=D0=92=D0=BE=D1=81=D1=81=D1=82=D0=B0=D0=BD=D0=BE=D0=B2=D0=BB=D0=
+=B5=D0=BD=D0=B8=D0=B5 =D0=BF=D0=B0=D1=80=D0=BE=D0=BB=D1=8F</h2>
+        <p>=D0=94=D0=BB=D1=8F =D1=81=D0=B1=D1=80=D0=BE=D1=81=D0=B0 =D0=BF=
+=D0=B0=D1=80=D0=BE=D0=BB=D1=8F, =D0=BF=D0=BE=D0=B6=D0=B0=D0=BB=D1=83=D0=B9=
+=D1=81=D1=82=D0=B0, =D0=BD=D0=B0=D0=B6=D0=BC=D0=B8=D1=82=D0=B5 =D0=BD=D0=B0=
+ =D0=BA=D0=BD=D0=BE=D0=BF=D0=BA=D1=83 =D0=BD=D0=B8=D0=B6=D0=B5:</p>
+        <a href=3D"/password_reset_confirm/Mg/c3eprt-750fd73be908bd9f80eebd=
+f994307c17/">
+            <button>=D0=A1=D0=B1=D1=80=D0=BE=D1=81=D0=B8=D1=82=D1=8C =D0=BF=
+=D0=B0=D1=80=D0=BE=D0=BB=D1=8C</button>
+        </a>
+    </div>
+</body>
+</html>
+
+--===============3334523613553813475==--

@@ -1,0 +1,71 @@
+from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from .models import Ticket
+from django.contrib.auth.forms import UserCreationForm
+from .models import Comment
+from .models import CommentFile
+from django.contrib.auth.models import Group
+from .models import Ticket, UserProfile
+from django.contrib.auth.models import User
+from .models import Profiles
+
+
+
+'''class LoginForm(AuthenticationForm):
+    pass'''
+
+class TicketForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['title', 'component', 'type', 'topic', 'description', 'assigned_to']
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(TicketForm, self).__init__(*args, **kwargs)
+        self.fields['topic'].widget.attrs.update({'class': 'your-class-name'})
+        self.fields['description'].widget.attrs.update({'placeholder': 'Введите описание:'})  # Добавление placeholder'а для поля описания
+
+    def save(self, commit=True):
+        ticket = super().save(commit=False)
+        if commit:
+            ticket.created_by = self.request.user
+            ticket.save() 
+        return ticket
+
+
+class AddUserForm(forms.Form):
+    users = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+    )
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+        widgets = {
+            'text': forms.Textarea(attrs={'placeholder': 'Введите ваш комментарий здесь'}),
+        }
+
+
+class CommentFileForm(forms.ModelForm):
+    class Meta:
+        model = CommentFile
+        fields = ['file']
+
+
+class SendTicketForm(forms.Form):
+    sent_to = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+    )  
+
+from .models import LeaveRequest
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profiles
+        fields = ['profile_picture']  # Укажите только поле аватара
+

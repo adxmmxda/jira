@@ -1,0 +1,42 @@
+Комрьтер мониторинга:
+User: prcmonitoring
+Password: Spb#$0822
+
+Пользователь TX мониторинг 
+User: prcmonitoring
+Password: MasMas1008
+
+WInSCP (FTP для оффлайн файлов TX)
+IP 10.250.5.7
+User: dbkoper
+Password: Unft7c845
+
+10.250.11.254
+User: ddavlatov	
+Password: Spb#$123
+
+SMS GW
+10.250.1.12
+User smsadmin
+Password Unft7c845@Sms21
+
+http://10.250.5.9/zabbix/
+User d.davlatov
+Password: Spb#$2022
+
+http://10.250.5.6:9000/
+User: admin	
+Password: Process@Unit001
+
+10.250.5.7 WinSCP
+login: dbkoper
+password: Unft7c845
+
+10.250.11.7
+login admin
+password Process@UnitNetwork001
+
+Паролӣ всех Mikrotikov:
+Mik1@#Pass0823
+
+ac%^W4e1asdc1t23

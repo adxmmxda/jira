@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Создание тикета{% endblock %}
+
+{% block content %}
+    
+<style>
+body {background-color: white;  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #111;}
+
+    
+    @keyframes slide-in {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .ticket-form {
+        margin-top: -10px;
+        max-width: 500px;   
+        margin: 0px auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        animation: slide-in 1s ease-in-out;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+        width: 95%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        animation: fade-in 1s ease-in-out;
+    }
+
+    .btn-submit {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+    .tick {
+        padding-top: 14px;
+    }
+    .scrollable-description {
+        max-height: 150px; /* Максимальная высота блока, где будет скролл */
+        overflow: auto; /* Добавляем скролл при необходимости */
+    }
+    body {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   background: #23b499;
+   font-family: 'Open Sans', sans-serif;
+   color: #fff;
+}
+select {
+   -webkit-appearance:none;
+   -moz-appearance:none;
+   -ms-appearance:none;
+   appearance:none;
+   outline:0;
+   box-shadow:none;
+   border:0!important;
+   background: #5c6664;
+   background-image: none;
+   flex: 1;
+   padding: 0 .5em;
+   color:#fff;
+   cursor:pointer;
+   font-size: 1em;
+   font-family: 'Open Sans', sans-serif;
+}
+select::-ms-expand {
+   display: none;
+}
+.select {
+   position: relative;
+   display: flex;
+   width: 20em;
+   height: 3em;
+   line-height: 3;
+   background: #5c6664;
+   overflow: hidden;
+   border-radius: .25em;
+}
+.select::after {
+   content: '\25BC';
+   position: absolute;
+   top: 0;
+   right: 0;
+   padding: 0 1em;
+   background: #2b2e2e;
+   cursor:pointer;
+   pointer-events:none;
+   transition:.25s all ease;
+}
+.select:hover::after {
+   color: #23b499;
+}
+</style>
+<div class="tick"></div>
+<div class="ticket-form">
+    <h2>Создание нового тикета</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}">Заголовок:</label>
+            {{ form.title }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.topic.id_for_label }}">Тема:</label>
+            {{ form.topic }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.description.id_for_label }}">Описание:</label>
+            <div class="scrollable-description">
+                {{ form.description }}
+            </div>
+        </div>
+        <div class="select">
+            <select for="{{ form.component.id_for_label }}">Компонент:</select>
+            {{ form.component }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.type.id_for_label }}">Тип тикета:</label>
+            {{ form.type }}
+        </div>  
+        
+         <!-- Добавил иконку для кнопки создания тикета -->
+         <button type="submit" class="btn-submit"><i class="fas fa-ticket-alt"></i> Создать тикет</button>
+
+         <!-- Добавил кнопку для очистки формы -->
+         <button type="reset" class="btn-submit">Очистить</button>
+
+
+         
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,190 @@
+{% load tz %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Комментарии</title>
+  <style>
+    /* Общие стили */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Заголовок */
+    h2 {
+      background-color: #525F7B;
+      color: #fff;
+      padding: 20px;
+      margin: 0;
+      text-align: center;
+    }
+
+    /* Контейнер для комментариев и формы */
+    .comments-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Форма добавления комментария */
+    #comment-form {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #comment-textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      height: 100px;
+      resize: none;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    /* Комментарии */
+    .comment {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 15px 0;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .comment:hover {
+      transform: scale(1.02);
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .author {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .time {
+      font-size: 14px;
+      color: #777;
+    }
+
+    .comment-text {
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    /* Файлы */
+    .file-list {
+      margin-top: 10px;
+    }
+
+    .file-item {
+      list-style-type: none;
+      margin: 5px 0;
+    }
+
+    .file-link {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .file-link:hover {
+      color: #0056b3;
+    }
+  </style>
+<div class="comments-container" id="comments-container">
+  <!-- Форма добавления комментария и файла -->
+  <div id="comment-file-form">
+    <label for="comment-textarea">Оставьте свой комментарий:</label>
+    <textarea id="comment-textarea" name="comment" placeholder="Введите ваш комментарий здесь" required></textarea>
+    <label for="file-input">Выберите файл:</label>
+    <input type="file" id="file-input" name="file" accept=".pdf, .doc, .docx, .txt">
+    <button type="button" id="submit-comment-file">Отправить комментарий и файл</button>
+  </div>
+
+  <!-- Список комментариев с файлами -->
+  <div id="comments-list"></div>
+</div>
+  <script>
+document.getElementById("submit-comment-file").addEventListener("click", function() {
+  var commentText = document.getElementById("comment-textarea").value;
+  var fileInput = document.getElementById("file-input");
+  var fileList = fileInput.files;
+  var files = [];
+  
+  // Проверяем, есть ли выбранный файл
+  if (fileList.length > 0) {
+    for (var i = 0; i < fileList.length; i++) {
+      var file = fileList[i];
+      files.push({
+        name: file.name,
+        url: URL.createObjectURL(file)
+      });
+    }
+  }
+
+  // Создаем новый комментарий
+  var commentContainer = document.createElement("div");
+  commentContainer.className = "comment";
+  commentContainer.textContent = commentText;
+
+  // Прикрепляем файлы к комментарию (если они были выбраны)
+  if (files.length > 0) {
+    var fileListElement = document.createElement("ul");
+    fileListElement.className = "file-list";
+    files.forEach(function(file) {
+      var listItem = document.createElement("li");
+      var fileLink = document.createElement("a");
+      fileLink.className = "file-link";
+      fileLink.href = file.url; // URL файла
+      fileLink.textContent = file.name;
+      listItem.appendChild(fileLink);
+      fileListElement.appendChild(listItem);
+    });
+    commentContainer.appendChild(fileListElement);
+  }
+
+  // Добавляем комментарий к списку комментариев
+  document.getElementById("comments-list").appendChild(commentContainer);
+
+  // Очищаем поля ввода
+  document.getElementById("comment-textarea").value = "";
+  fileInput.value = "";
+});
+  </script>
+</body>
+</html>
