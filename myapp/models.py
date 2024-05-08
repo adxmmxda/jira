@@ -39,7 +39,7 @@ class Ticket(models.Model):
     sent_to = models.ManyToManyField(User, related_name='received_tickets', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     assigned_to = models.ManyToManyField(User, related_name='assigned_tickets', blank=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')  # Добавляем поле статуса и значение по умолчанию
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')  
 
     def __str__(self):
         return self.title

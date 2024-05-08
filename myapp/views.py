@@ -52,6 +52,7 @@ logger = logging.getLogger(__name__)
 
 
 def login_view(request):
+    
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -66,9 +67,10 @@ def login_view(request):
             except UserProfile.DoesNotExist:
                 error_message = 'Пользователь не найден'
         else:
-            error_message = 'Неправильные учетные данные'
+            error_message = password
             
         return render(request, 'login.html', {'error': error_message})
+        
     
     return render(request, 'login.html')
 
@@ -128,7 +130,7 @@ def password_reset(request):
             uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
 
             # Check if token is valid and generate reset URL
-            current_site = "jira.spitamenbank.com"#get_current_site(request)
+            current_site = "password_reset_confirm.html"#get_current_site(request)
             reset_url = reverse('password_reset_confirm', args=[uidb64, token])  # Изменен способ передачи параметров
             reset_url = f"http://{current_site}{reset_url}"
 
@@ -200,9 +202,15 @@ def password_reset_email(request):
         form = CustomPasswordResetForm()
     return render(request, 'forgot_password.html', {'form': form})
 
+def my_view(request):
+
+    user_profile = UserProfile.objects.get(user=request.user) 
+    context = {'user_profile': user_profile}
+    return render(request, 'tickets.html', context)
 
 @login_required
 def tickets(request):
+    user_profile = UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
         form = TicketForm(request.POST, request=request)
         if form.is_valid():
@@ -215,11 +223,21 @@ def tickets(request):
             # После создания тикета, его статус должен быть установлен как "Открыт"
             ticket.status = 'open'
             ticket.save()
-
+    
             return redirect('user_tickets')  # Редирект на страницу с тикетами пользователя
     else:
         form = TicketForm(request=request)
-    return render(request, 'tickets.html', {'form': form})
+    return render(request, 'tickets.html', {
+        'form': form,
+
+        'spitamen': user_profile.spitamen,
+        'sbt': user_profile.sbt,
+        'matin': user_profile.matin,
+        'ssb': user_profile.ssb,
+        'sarvat': user_profile.sarvat,
+        'vasl': user_profile.vasl
+    })
+
 
 
 
@@ -229,6 +247,7 @@ from .forms import TicketForm
 
 @login_required
 def user_tickets(request):
+    user_profile = UserProfile.objects.get(user=request.user)
     user = request.user
     users = User.objects.all()
     project_form = TicketForm()  # Создание формы для добавления проекта
@@ -245,7 +264,23 @@ def user_tickets(request):
             ticket.assigned_to.add(user)
             tickets = Ticket.objects.filter(assigned_to=user)  # Обновляем список тикетов
 
-    return render(request, 'user_tickets.html', {'tickets': tickets, 'users': users, 'project_form': project_form})
+    return render(request, 'user_tickets.html', {'tickets': tickets, 'users': users, 'project_form': project_form,
+        'spitamen': user_profile.spitamen,
+        'sbt': user_profile.sbt,
+        'matin': user_profile.matin,
+        'ssb': user_profile.ssb,
+        'sarvat': user_profile.sarvat,
+        'vasl': user_profile.vasl
+    })
+def team_project(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'team_project.html', 
+        {'spitamen': user_profile.spitamen,
+        'sbt': user_profile.sbt,
+        'matin': user_profile.matin,
+        'ssb': user_profile.ssb,
+        'sarvat': user_profile.sarvat,
+        'vasl': user_profile.vasl})
 
 # from .models import Ticket, TicketSubscription
 # @login_required

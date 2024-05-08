@@ -1,0 +1,82 @@
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<style>
+ .ticket-grid {
+  width: 135%; display: inline;
+}
+.bl_headerUtils_logo {
+  width: 200px; display: inline;
+}
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap");
+
+
+body {
+
+  font-family: "Oswald", sans-serif;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #faedcd;
+
+}
+#clock {
+  max-width: 600px;
+  margin-left: 640px;
+}
+
+/* for smaller screens below 700px */
+@media only screen and (max-width: 700px) {
+  body {
+    font-size: 1.8rem;
+  }
+}
+
+/*for smaller screens below 300px*/
+@media only screen and (max-width: 300px) {
+  body {
+    font-size: 1.6rem;
+  }
+}
+</style>
+
+<div class="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
+    <div class="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
+      <a class="bl_headerUtils_logo" href="https://www.spitamenbank.tj/"><img src="https://www.spitamenbank.tj/local/templates/sb-main-template/img/logo/logo-horizontal-ru.svg" ></a>
+      <svg class="w-8" xmlns="" fill="none" viewBox="" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+      </svg>
+      <!-- <input class="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring" type="search" placeholder="Search for anything…"> -->
+      <div class="ml-10">
+        <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'tickets' %}">Add Ticket</a>
+        <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'user_tickets' %}">Projects</a>
+        <a class="mx-2 text-sm font-semibold text-indigo-700" href="{% url 'team_project' %}">{% if spitamen %} Spitamen {% endif %}
+            {% if sbt %} Sbt {% endif %}
+            {% if matin %} Matin {% endif %}
+            {% if ssb %} Ssb{% endif %}
+            {% if sarvat %} Sarvat {% endif %}
+            {% if vasl %} Vasl {% endif %} Projects</a>
+        <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'login' %}">Logout</a>
+      </div>
+      <div id="clock">
+        <h1 id="date-time"></h1>
+      </div>
+      <a href="profile.html" class="flex items-center justify-center w-8 h-8 ml-auto overflow-hidden rounded-full cursor-pointer">
+        <img src="https://cdn-icons-png.flaticon.com/512/10870/10870645.png" alt="">
+      </a>
+    </div>
+    <div class="px-10 mt-6">
+      <h1 class="text-2xl font-bold">   
+        {% if spitamen %} Spitamen {% endif %}
+        {% if sbt %} Sbt {% endif %}
+        {% if matin %} Matin {% endif %}
+        {% if ssb %} Ssb{% endif %}
+        {% if sarvat %} Sarvat {% endif %}
+        {% if vasl %} Vasl {% endif %} Project Board
+      </h1>
+    </div>
+    <div class="flex flex-grow px-10 mt-4 space-x-6 overflow-auto">
+      <div class="flex flex-col flex-shrink-0 w-72" id="sortable-container">
+          <div class="flex items-center flex-shrink-0 h-10 px-2">
+              <!-- <span class="block text-sm font-semibold">To Do</span> -->
+          </div>

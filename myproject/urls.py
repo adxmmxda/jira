@@ -3,7 +3,7 @@ from myapp.views import login_view, logout_view
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from myapp.views import home_view, forgot_password,password_reset, password_reset_confirm, invalid_reset_link, password_reset_complete, tickets, user_tickets, projects, add_comment, leave_request, profile_view
+from myapp.views import home_view, forgot_password,password_reset, password_reset_confirm, invalid_reset_link, password_reset_complete, tickets, user_tickets, projects, add_comment, leave_request, profile_view, team_project
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,7 +23,8 @@ urlpatterns = [
     path('leave_request/', leave_request, name='leave_request'),
     path('tickets/profile.html/', profile_view, name='profile_view'),
     path('user_tickets/profile.html/', profile_view, name='profile_view'),
-    path('add_comment/profile.html/', profile_view, name='profile_view'),    
+    path('add_comment/profile.html/', profile_view, name='profile_view'),  
+    path('team_project/', team_project, name='team_project'),  
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
