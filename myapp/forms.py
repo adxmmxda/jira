@@ -17,13 +17,13 @@ from .models import Profiles
 class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['title', 'component', 'type', 'topic', 'description', 'assigned_to']
+        fields = ['title', 'component', 'type', 'topic', 'description', 'assigned_to', 'group']
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(TicketForm, self).__init__(*args, **kwargs)
         self.fields['topic'].widget.attrs.update({'class': 'your-class-name'})
-        self.fields['description'].widget.attrs.update({'placeholder': 'Введите описание:'})  # Добавление placeholder'а для поля описания
+        self.fields['description'].widget.attrs.update({'placeholder': 'Type a description:'})  # Добавление placeholder'а для поля описания
 
     def save(self, commit=True):
         ticket = super().save(commit=False)

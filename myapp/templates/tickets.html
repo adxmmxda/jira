@@ -330,7 +330,7 @@ body {
         <div class="form-group">
             {{ form.title }}
             <div class="label-box">
-                <label for="{{ form.title.id_for_la00bel }}" class="labeled">Заголовок:</label>
+                <label for="{{ form.title.id_for_la00bel }}" class="labeled">Title:</label>
             </div>
             
         </div>
@@ -338,7 +338,7 @@ body {
         <div class="form-group">
             {{ form.topic }}
             <div class="label-box">
-            <label for="{{ form.topic.id_for_label }}">Тема:</label>
+            <label for="{{ form.topic.id_for_label }}">Theme:</label>
         </div>
         </div>
 
@@ -355,13 +355,17 @@ body {
 
         <div class="select">
             
-            <label for="{{ form.component.id_for_label }}">Компонент:</label>
+            <label for="{{ form.component.id_for_label }}">Component:</label>
             {{ form.component }}
         </div>
         <div class="select">
-            <label for="{{ form.type.id_for_label }}">Тип тикета:</label>
+            <label for="{{ form.type.id_for_label }}">Type:</label>
             {{ form.type }}
-        </div>  
+        </div> 
+        <div class="select">
+            <label for="{{ form.group.id_for_label }}">User Profile:</label>
+            {{ form.group }}
+        </div> 
         
          <!-- Добавил иконку для кнопки создания тикета -->
          <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"><i class="fas fa-ticket-alt"></i> Создать тикет</button>

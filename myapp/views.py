@@ -272,15 +272,44 @@ def user_tickets(request):
         'sarvat': user_profile.sarvat,
         'vasl': user_profile.vasl
     })
+@login_required
 def team_project(request):
     user_profile = UserProfile.objects.get(user=request.user)
-    return render(request, 'team_project.html', 
-        {'spitamen': user_profile.spitamen,
+    group_name = None
+    
+    # Определите группу пользователя
+    if user_profile.spitamen:
+        group_name = 'spitamen'
+    elif user_profile.sbt:
+        group_name = 'sbt'
+    elif user_profile.matin:
+        group_name = 'matin'
+    elif user_profile.ssb:
+        group_name = 'ssb'
+    elif user_profile.sarvat:
+        group_name = 'sarvat'
+    elif user_profile.vasl:
+        group_name = 'vasl'        
+    # Другие группы
+    
+    # Фильтрация тикетов по группе пользователя
+    if group_name:
+        tickets = Ticket.objects.filter(group=group_name)
+        group_tickets = True  # Переменная для указания, что отображаются только тикеты текущей группы
+    else:
+        tickets = Ticket.objects.all()  # Показать все тикеты, если группа не определена
+        group_tickets = False  # Переменная для указания, что отображаются все тикеты
+    
+    return render(request, 'team_project.html', {'tickets': tickets, 'group_tickets': group_tickets,
+        'spitamen': user_profile.spitamen,
         'sbt': user_profile.sbt,
         'matin': user_profile.matin,
         'ssb': user_profile.ssb,
         'sarvat': user_profile.sarvat,
-        'vasl': user_profile.vasl})
+        'vasl': user_profile.vasl
+    })
+
+
 
 # from .models import Ticket, TicketSubscription
 # @login_required
@@ -305,8 +334,8 @@ def projects(request):
 
 from django.shortcuts import redirect
 
-from .models import Ticket, Comment, CommentFile  # Импортируем CommentFile
-from .forms import CommentForm, CommentFileForm  # Импортируем CommentFileForm
+from .models import Ticket, Comment, CommentFile  
+from .forms import CommentForm, CommentFileForm  
 
 
 from django.core.paginator import Paginator
@@ -317,17 +346,17 @@ from django.utils import timezone
 def add_comment(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     
-    # Определите количество комментариев на одной странице
+
     comments_per_page = 12
     comments = Comment.objects.filter(ticket=ticket).order_by('-created_at')
 
-    # Инициализируйте объект Paginator
+
     paginator = Paginator(comments, comments_per_page)
     
-    # Получите номер запрошенной страницы из параметра запроса
+
     page_number = request.GET.get('page')
     
-    # Получите объект страницы комментариев для указанной страницы
+
     comments_page = paginator.get_page(page_number)
 
     if request.method == 'POST':
@@ -335,7 +364,7 @@ def add_comment(request, ticket_id):
         file_form = CommentFileForm(request.POST, request.FILES)
 
         if 'close_ticket' in request.POST:
-            # Если нажата кнопка "Close ticket", изменяем статус тикета на "Закрытый"
+
             ticket.status = 'closed'
             ticket.save()
 
@@ -344,19 +373,17 @@ def add_comment(request, ticket_id):
             comment.ticket = ticket
             comment.user = request.user
             comment.save()
-
-            # Обработка файлов, если они есть
             files = request.FILES.getlist('file')
             for f in files:
                 comment_file = CommentFile(comment=comment, file=f)
                 comment_file.save()
 
-            # Проверка и изменение статуса тикета на "В процессе"
+
             if ticket.status == 'open':
                 ticket.status = 'in_progress'
                 ticket.save()
 
-            # Создайте URL с параметром page=1 и перенаправьте на него
+
             redirect_url = reverse('add_comment', kwargs={'ticket_id': ticket_id}) + '?page=1'
             return redirect(redirect_url)
     else:
@@ -372,18 +399,17 @@ def leave_request(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         user_type = request.POST.get('user_type')
-        # Сохраняем заявку в базе данных
+
         LeaveRequest.objects.create(first_name=first_name, last_name=last_name, user_type=user_type)
 
-        # Отправляем уведомление администратору
+
         subject = 'Новая заявка на сайте'
         message = f'Получена новая заявка от {first_name} {last_name}.'
         from_email = settings.DEFAULT_FROM_EMAIL
-        recipient_list = [settings.ADMIN_EMAIL]  # Замените на нужный адрес администратора
+        recipient_list = [settings.ADMIN_EMAIL]  
 
         send_mail(subject, message, from_email, recipient_list)
 
-        # Редиректим пользователя на другую страницу после отправки заявки
         return redirect('login')
 
     return render(request, 'leave_request.html')
@@ -404,14 +430,14 @@ def profile_modal(request):
 
     return render(request, 'user_tickets.html', {'form': form, 'user': user})
 
-from .forms import ProfileForm  # Подставьте вашу форму
+from .forms import ProfileForm  
 
 def profile_view(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('profile')  # Подставьте ваше имя маршрута
+            return redirect('profile')  
     else:
         form = ProfileForm()
     return render(request, 'profile.html', {'form': form})

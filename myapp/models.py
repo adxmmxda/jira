@@ -29,6 +29,14 @@ class Ticket(models.Model):
         ('task', 'Задача'),
         ('question', 'Вопрос'),
     )
+    GROUP_CHOICES = (
+    ('spitamen', 'Spitamen'),
+    ('sbt', 'Sbt'),
+    ('matin', 'Matin'),
+    ('ssb', 'Ssb'),
+    ('sarvat', 'Sarvat'),
+    ('vasl', 'Vasl'),
+)
 
     title = models.CharField(max_length=200)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)
@@ -40,7 +48,7 @@ class Ticket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     assigned_to = models.ManyToManyField(User, related_name='assigned_tickets', blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')  
-
+    group = models.CharField(max_length=20, choices=GROUP_CHOICES)
     def __str__(self):
         return self.title
 from django.shortcuts import render
