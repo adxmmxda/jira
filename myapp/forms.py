@@ -25,6 +25,33 @@ class TicketForm(forms.ModelForm):
         self.fields['topic'].widget.attrs.update({'class': 'your-class-name'})
         self.fields['description'].widget.attrs.update({'placeholder': 'Type a description:'})  # Добавление placeholder'а для поля описания
 
+        # Фильтрация групп на основе пользователя
+        user_profile = UserProfile.objects.get(user=self.request.user)
+        
+        if user_profile.spitamen:
+            group_choices = [
+                ('spitamen', 'Spitamen'),
+                ('sbt', 'Sbt'),
+                ('matin', 'Matin'),
+                ('ssb', 'Ssb'),
+                ('sarvat', 'Sarvat'),
+                ('vasl', 'Vasl')
+            ]
+        else:
+            group_choices = [('spitamen', 'Public')]
+            if user_profile.sbt:
+                group_choices.append(('sbt', 'Private'))
+            if user_profile.matin:
+                group_choices.append(('matin', 'Private'))
+            if user_profile.ssb:
+                group_choices.append(('ssb', 'Private'))
+            if user_profile.sarvat:
+                group_choices.append(('sarvat', 'Private'))
+            if user_profile.vasl:
+                group_choices.append(('vasl', 'Private'))
+        
+        self.fields['group'].choices = group_choices
+
     def save(self, commit=True):
         ticket = super().save(commit=False)
         if commit:

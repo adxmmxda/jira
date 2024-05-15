@@ -229,7 +229,6 @@ def tickets(request):
         form = TicketForm(request=request)
     return render(request, 'tickets.html', {
         'form': form,
-
         'spitamen': user_profile.spitamen,
         'sbt': user_profile.sbt,
         'matin': user_profile.matin,
@@ -237,6 +236,7 @@ def tickets(request):
         'sarvat': user_profile.sarvat,
         'vasl': user_profile.vasl
     })
+
 
 
 
@@ -250,21 +250,35 @@ def user_tickets(request):
     user_profile = UserProfile.objects.get(user=request.user)
     user = request.user
     users = User.objects.all()
-    project_form = TicketForm()  # Создание формы для добавления проекта
-    # tickets = Ticket.objects.filter(assigned_to=user)
-    tickets = Ticket.objects.all()
+    project_form = TicketForm(request.POST or None, request=request)  # Создание формы для добавления проекта
+
+    # Определение группы пользователя
+    group_name = None
+    groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']  # Список всех групп
+    for group in groups:
+        if getattr(user_profile, group):  # Проверяем, состоит ли пользователь в текущей группе
+            group_name = group
+            break  # Если пользователь состоит в группе, выходим из цикла
+
+    tickets = Ticket.objects.filter(created_by=user)
 
     if request.method == 'POST':
-        project_form = TicketForm(request.POST)
         if project_form.is_valid():
             ticket = project_form.save(commit=False)
             ticket.created_by = user
             ticket.status = 'open'
             ticket.save()
             ticket.assigned_to.add(user)
-            tickets = Ticket.objects.filter(assigned_to=user)  # Обновляем список тикетов
 
-    return render(request, 'user_tickets.html', {'tickets': tickets, 'users': users, 'project_form': project_form,
+            # Проверяем, совпадает ли группа пользователя с группой тикета
+            if ticket.group != group_name:
+                ticket.save()
+                tickets = Ticket.objects.filter(created_by=user)  # Обновляем список тикетов
+
+    return render(request, 'user_tickets.html', {
+        'tickets': tickets,
+        'users': users,
+        'project_form': project_form,
         'spitamen': user_profile.spitamen,
         'sbt': user_profile.sbt,
         'matin': user_profile.matin,
@@ -277,28 +291,20 @@ def team_project(request):
     user_profile = UserProfile.objects.get(user=request.user)
     group_name = None
     
-    # Определите группу пользователя
-    if user_profile.spitamen:
-        group_name = 'spitamen'
-    elif user_profile.sbt:
-        group_name = 'sbt'
-    elif user_profile.matin:
-        group_name = 'matin'
-    elif user_profile.ssb:
-        group_name = 'ssb'
-    elif user_profile.sarvat:
-        group_name = 'sarvat'
-    elif user_profile.vasl:
-        group_name = 'vasl'        
-    # Другие группы
+    # Определение группы пользователя
+    groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']  # Список всех групп
+    for group in groups:
+        if getattr(user_profile, group):  # Проверяем, состоит ли пользователь в текущей группе
+            group_name = group
+            break  # Если пользователь состоит в группе, выходим из цикла
     
     # Фильтрация тикетов по группе пользователя
     if group_name:
         tickets = Ticket.objects.filter(group=group_name)
         group_tickets = True  # Переменная для указания, что отображаются только тикеты текущей группы
     else:
-        tickets = Ticket.objects.all()  # Показать все тикеты, если группа не определена
-        group_tickets = False  # Переменная для указания, что отображаются все тикеты
+        tickets = Ticket.objects.none()  # Пустой QuerySet, если группа не определена
+
     
     return render(request, 'team_project.html', {'tickets': tickets, 'group_tickets': group_tickets,
         'spitamen': user_profile.spitamen,

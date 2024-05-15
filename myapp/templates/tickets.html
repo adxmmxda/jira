@@ -295,7 +295,8 @@ body {
       <div class="ml-10">
           <a class="mx-2 text-sm font-semibold text-indigo-700" href="{% url 'tickets' %}">Add Ticket</a>
           <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'user_tickets' %}">Projects</a>
-          <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'team_project' %}">        {% if spitamen %} Spitamen {% endif %}
+          <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'team_project' %}">        
+            {% if spitamen %} Spitamen {% endif %}
             {% if sbt %} Sbt {% endif %}
             {% if matin %} Matin {% endif %}
             {% if ssb %} Ssb{% endif %}
