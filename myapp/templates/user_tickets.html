@@ -2,7 +2,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 <style>
  .ticket-grid {
-  width:75% ; display: inline;
+  width:65% ; display: inline;
+  margin-top: -55px;
 }
 .bl_headerUtils_logo {
   width: 200px; display: inline;
@@ -22,7 +23,7 @@ body {
 }
 #clock {
   max-width: 600px;
-  margin-left: 640px;
+  margin-left: 30%;
 }
 
 /* for smaller screens below 700px */
@@ -38,9 +39,40 @@ body {
     font-size: 1.6rem;
   }
 }
+.custom-flex-container {
+  display: flex;
+  margin-left: 1.5rem; /* Эквивалент класса ml-6 в Tailwind CSS */
+  margin-top: 40px;
+  font-size: large;
+  font-weight: bold;
+}
+
+
+
+
+
+.custom-flex-container > div:nth-child(1) {
+  margin-right: 168px; 
+}
+
+.custom-flex-container > div:nth-child(2) {
+  margin-right: 218px; 
+}
+
+.custom-flex-container > div:nth-child(3) {
+  margin-right: 176px; 
+}
+
+.custom-flex-container > div:nth-child(4) {
+  margin-right: 175px; 
+}
+
+
+
+
 </style>
 
-<div class="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
+<div class="flex flex-col w-screen h-screen  overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
     <div class="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
       <a class="bl_headerUtils_logo" href="https://www.spitamenbank.tj/"><img src="https://www.spitamenbank.tj/local/templates/sb-main-template/img/logo/logo-horizontal-ru.svg" ></a>
       <svg class="w-8" xmlns="" fill="none" viewBox="" stroke="currentColor">
@@ -69,6 +101,13 @@ body {
       <h1 class="text-2xl font-bold">   
       Team Project Board
       </h1>
+      <div class="custom-flex-container">
+        <div>Ticket Title:</div>
+        <div>Theme:</div>
+        <div>Component:</div>
+        <div>Assigned to:</div>
+        <div>Status:</div>
+      </div>
     </div>
     <div class="flex flex-grow px-10 mt-4 space-x-6 overflow-auto">
       <div class="flex flex-col flex-shrink-0 w-72" id="sortable-container">
@@ -81,29 +120,29 @@ body {
               <div class="ticket-item" data-id="{{ ticket.id }}">
                 <div class="flex flex-col pb-2 overflow-auto">
   
-          <div class="inline-grid grid-cols-5 relative flex flex-col items-start p-4 mt-3  bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100" draggable="true">
+          <div class="inline-grid grid-cols-5 relative flex flex-col items-start p-4 mt-3  bg-white rounded-xl cursor-pointer bg-opacity-90 group hover:bg-opacity-100" draggable="true">
             <button class="absolute top-0 right-0 flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
               <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
               </svg>
             </button>
-            <span class="flex items-center inline-block h-8 px-3 text-xs font-semibold text-blue-500 bg-blue-200 rounded-full">Ticket Title:</strong>{{ ticket.title }}</span>
-            <h4 class="mt-2 text-sm font-medium "><strong>Theme:</strong> {{ ticket.topic }}</h4>
-            <h4 class="mt-2 text-sm font-medium"><strong>Component:</strong> {{ ticket.component }}</h4>
-            <h4 class="mt-2 text-sm font-medium"><strong>Assigned to:</strong>{% for user in ticket.assigned_to.all %} {{ user.username }}{% endfor %}</h4>
+            <span class="flex items-center inline-block h-8 px-3 text-base font-semibold text-blue-500  rounded-full"></strong>{{ ticket.title }}</span>
+            <h4 class="mt-2 text-base font-medium "><strong></strong> {{ ticket.topic }}</h4>
+            <h4 class="mt-2 text-base font-medium"><strong></strong> {{ ticket.component }}</h4>
+            <h4 class="mt-2 text-base font-medium"><strong></strong>{% for user in ticket.assigned_to.all %} {{ user.username }}{% endfor %}</h4>
             <form method="post">
               {% csrf_token %}
               <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
               {% if ticket.status == 'open' %}
-              <span class="flex items-center h-8 px-3 text-xs font-semibold text-green-500 bg-green-100 rounded-full">
+              <span class="flex items-center h-8 px-3 mr-24 text-base font-medium text-green-500 bg-green-100 rounded-full">
                   {{ ticket.get_status_display }}
               </span>
           {% elif ticket.status == 'closed' %}
-              <span class="flex items-center h-8 px-3 text-xs font-semibold text-red-500 bg-red-200 rounded-full">
+              <span class="flex items-center h-8 px-3 mr-24 text-base font-medium text-red-500 bg-red-200 rounded-full">
                   {{ ticket.get_status_display }}
               </span>
           {% elif ticket.status == 'in_progress' %}
-              <span class="flex items-center h-8 px-3 text-xs font-semibold text-orange-500 bg-orange-200 rounded-full">
+              <span class="flex items-center h-8 px-3 mr-24 text-base font-medium text-orange-500 bg-orange-200 rounded-full">
                   {{ ticket.get_status_display }}
               </span>
           {% endif %}
@@ -121,7 +160,7 @@ body {
 
                   <a class="ml-1 leading-none" href="{% url 'add_comment' ticket.id %}">Comments</a>
                   <div class="flex items-center ml-4">
-                    <svg class="h-8 w-8 text-gray-400"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="h-8 w-8 text-gray-300"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                     
@@ -130,7 +169,7 @@ body {
 
                 
               </div>
-              <div class="flex items-center ml-4">
+
                
                 
                 

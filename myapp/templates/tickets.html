@@ -268,7 +268,7 @@ background-color: #faedcd;
 }
 #clock {
 max-width: 600px;
-margin-left: 640px;
+margin-left: 30%;
 }
 
 /* for smaller screens below 700px */
@@ -302,7 +302,7 @@ body {
             {% if ssb %} Ssb{% endif %}
             {% if sarvat %} Sarvat {% endif %}
             {% if vasl %} Vasl {% endif %} Projects</a>
-        <a class="mx-2 text-sm font-semibold text-gray-300 hover:text-indigo-600" href="{% url 'login' %}">Logout</a>
+            <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'login' %}">Logout</a>
       </div>
       <div id="clock">
         <h1 id="date-time"></h1>
