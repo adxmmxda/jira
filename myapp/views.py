@@ -62,7 +62,7 @@ def login_view(request):
             try:
                 user_profile = UserProfile.objects.get(user=user)
                 login(request, user)
-                return redirect('user_tickets')
+                return redirect('tickets')
 
             except UserProfile.DoesNotExist:
                 error_message = 'Пользователь не найден'
@@ -286,6 +286,75 @@ def user_tickets(request):
         'sarvat': user_profile.sarvat,
         'vasl': user_profile.vasl
     })
+
+from django.shortcuts import redirect
+
+from .models import Ticket, Comment, CommentFile  
+from .forms import CommentForm, CommentFileForm  
+
+
+from django.core.paginator import Paginator
+
+from django.utils import timezone
+
+@login_required
+def add_comment(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    user = request.user
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    comments_per_page = 12
+    comments = Comment.objects.filter(ticket=ticket).order_by('-created_at')
+
+    paginator = Paginator(comments, comments_per_page)
+    page_number = request.GET.get('page')
+    comments_page = paginator.get_page(page_number)
+
+    group_name = None
+    groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']  # Список всех групп
+    for group in groups:
+        if getattr(user_profile, group):  # Проверяем, состоит ли пользователь в текущей группе
+            group_name = group
+            break  # Если пользователь состоит в группе, выходим из цикла
+
+    tickets = Ticket.objects.filter(created_by=user)
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        file_form = CommentFileForm(request.POST, request.FILES)
+
+        if 'close_ticket' in request.POST:
+            ticket.status = 'closed'
+            ticket.save()
+
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.ticket = ticket
+            comment.user = request.user
+            comment.save()
+
+            files = request.FILES.getlist('file')
+            for f in files:
+                comment_file = CommentFile(comment=comment, file=f)
+                comment_file.save()
+
+            if ticket.status == 'open':
+                ticket.status = 'in_progress'
+                ticket.save()
+
+            redirect_url = reverse('add_comment', kwargs={'ticket_id': ticket_id}) + '?page=1'
+            return redirect(redirect_url)
+    else:
+        comment_form = CommentForm()
+        file_form = CommentFileForm()
+
+    return render(request, 'add_comment.html', {
+        'ticket': ticket,
+        'comments': comments_page,
+        'comment_form': comment_form,
+        'file_form': file_form,
+        'tickets': tickets,  # Передаем список тикетов в контекст
+    })
 @login_required
 def team_project(request):
     user_profile = UserProfile.objects.get(user=request.user)
@@ -338,65 +407,6 @@ def projects(request):
     projects = Project.objects.all()
     return render(request, 'projects.html', {'projects': projects})
 
-from django.shortcuts import redirect
-
-from .models import Ticket, Comment, CommentFile  
-from .forms import CommentForm, CommentFileForm  
-
-
-from django.core.paginator import Paginator
-
-from django.utils import timezone
-
-@login_required
-def add_comment(request, ticket_id):
-    ticket = get_object_or_404(Ticket, id=ticket_id)
-    
-
-    comments_per_page = 12
-    comments = Comment.objects.filter(ticket=ticket).order_by('-created_at')
-
-
-    paginator = Paginator(comments, comments_per_page)
-    
-
-    page_number = request.GET.get('page')
-    
-
-    comments_page = paginator.get_page(page_number)
-
-    if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
-        file_form = CommentFileForm(request.POST, request.FILES)
-
-        if 'close_ticket' in request.POST:
-
-            ticket.status = 'closed'
-            ticket.save()
-
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.ticket = ticket
-            comment.user = request.user
-            comment.save()
-            files = request.FILES.getlist('file')
-            for f in files:
-                comment_file = CommentFile(comment=comment, file=f)
-                comment_file.save()
-
-
-            if ticket.status == 'open':
-                ticket.status = 'in_progress'
-                ticket.save()
-
-
-            redirect_url = reverse('add_comment', kwargs={'ticket_id': ticket_id}) + '?page=1'
-            return redirect(redirect_url)
-    else:
-        comment_form = CommentForm()
-        file_form = CommentFileForm()
-
-    return render(request, 'add_comment.html', {'ticket': ticket, 'comments': comments_page, 'comment_form': comment_form, 'file_form': file_form})
 
 from django.shortcuts import render
 

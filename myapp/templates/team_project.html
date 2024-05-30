@@ -26,14 +26,14 @@ body {
   margin-left: 30%;
 }
 
-/* for smaller screens below 700px */
+
 @media only screen and (max-width: 700px) {
   body {
     font-size: 1.8rem;
   }
 }
 
-/*for smaller screens below 300px*/
+
 @media only screen and (max-width: 300px) {
   body {
     font-size: 1.6rem;
@@ -41,7 +41,7 @@ body {
 }
 .custom-flex-container {
   display: flex;
-  margin-left: 1.5rem; /* Эквивалент класса ml-6 в Tailwind CSS */
+  margin-left: 1.5rem; 
   margin-top: 40px;
   font-size: large;
   font-weight: bold;
@@ -131,7 +131,7 @@ body {
                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
               </svg>
             </button>
-            <span class="flex items-center inline-block h-8 px-3 text-base font-semibold text-blue-500  rounded-full"></strong>{{ ticket.title }}</span>
+            <span class="flex items-center inline-block h-8 px-3 text-base font-semibold text-blue-500  rounded-full"></strong>{{ ticket.title }} - {{ ticket.id }}</span>
             <h4 class="mt-2 text-base font-medium "><strong></strong> {{ ticket.topic }}</h4>
             <h4 class="mt-2 text-base font-medium"><strong></strong> {{ ticket.component }}</h4>
             <h4 class="mt-2 text-base font-medium"><strong></strong>{% for user in ticket.assigned_to.all %} {{ user.username }}{% endfor %}</h4>

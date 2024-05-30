@@ -2,9 +2,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 <style>
  .ticket-grid {
-  width:65% ; display: inline;
+  width:55% ; display: inline;
   margin-top: -55px;
+  overflow: hidden;
 }
+
+.ticket-item {
+  min-width: 650px;
+}
+
+.pane.left {
+  overflow: hidden;
+}
+
+.pane.right {
+  overflow: hidden;
+}
+
 .bl_headerUtils_logo {
   width: 200px; display: inline;
 }
@@ -66,6 +80,46 @@ body {
 .custom-flex-container > div:nth-child(4) {
   margin-right: 175px; 
 }
+*, *::before, *::after {
+ box-sizing: border-box;
+}
+  
+ body {
+  margin: 0;
+}
+
+.wrapper {
+  height: 100vh;
+  width: 98.4svw;
+
+  border: 3px solid white;
+  display: flex;
+}
+
+.pane {
+  padding: 1em;
+
+  min-width: 200px;
+}
+
+.left {
+  padding: 0  ;
+  max-width: 600px;
+}
+
+.right {
+  position: relative;
+}
+
+.gutter {
+  width: 10px;
+  height: 100%;
+  background: rgb(182, 181, 181);
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: col-resize;
+}
 
 
 
@@ -101,35 +155,40 @@ body {
       <h1 class="text-2xl font-bold">   
       Team Project Board
       </h1>
-      <div class="custom-flex-container">
+      <!-- <div class="custom-flex-container">
         <div>Ticket Title:</div>
         <div>Theme:</div>
         <div>Component:</div>
         <div>Assigned to:</div>
         <div>Status:</div>
-      </div>
+      </div> -->
     </div>
-    <div class="flex flex-grow px-10 mt-4 space-x-6 overflow-auto">
+    
+    
+    <div class="flex flex-grow space-x-6 overflow-auto">
       <div class="flex flex-col flex-shrink-0 w-72" id="sortable-container">
-          <div class="flex items-center flex-shrink-0 h-10 px-2">
-              <!-- <span class="block text-sm font-semibold">To Do</span> -->
-          </div>
+        <div class="flex items-center flex-shrink-0 h-10 px-2">
+          <!-- <span class="block text-sm font-semibold">To Do</span> -->
+        </div>
 
+        <div class="wrapper ml-2">
+          <div class="pane left">
             <div class="ticket-grid">
               {% for ticket in tickets %}
               <div class="ticket-item" data-id="{{ ticket.id }}">
-                <div class="flex flex-col pb-2 overflow-auto">
+                <div class="flex flex-col overflow-auto">
   
-          <div class="inline-grid grid-cols-5 relative flex flex-col items-start p-4 mt-3  bg-white rounded-xl cursor-pointer bg-opacity-90 group hover:bg-opacity-100" draggable="true">
+          <div class="border-b border-b-gray-500 relative flex flex-wrap items-start p-4 bg-white cursor-pointer bg-opacity-90 group hover:bg-opacity-100" draggable="true">
             <button class="absolute top-0 right-0 flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
               <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
               </svg>
             </button>
-            <span class="flex items-center inline-block h-8 px-3 text-base font-semibold text-blue-500  rounded-full"></strong>{{ ticket.title }}</span>
+            <span class="flex items-center inline-block h-8 px-3 text-base font-semibold text-blue-500  rounded-full"></strong>{{ ticket.title }} - {{ ticket.id }}</span>
             <h4 class="mt-2 text-base font-medium "><strong></strong> {{ ticket.topic }}</h4>
-            <h4 class="mt-2 text-base font-medium"><strong></strong> {{ ticket.component }}</h4>
-            <h4 class="mt-2 text-base font-medium"><strong></strong>{% for user in ticket.assigned_to.all %} {{ user.username }}{% endfor %}</h4>
+            <h4 class="mt-2 text-base font-medium component" style="display: none;"><strong></strong> {{ ticket.component }}</h4>
+            <h4 class="mt-2 text-base font-medium descpription" style="display: none;"><strong></strong> {% for user in ticket.assigned_to.all %} {{ user.username }}{% endfor %}</h4>
+      
             <form method="post">
               {% csrf_token %}
               <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
@@ -146,12 +205,12 @@ body {
                   {{ ticket.get_status_display }}
               </span>
           {% endif %}
-            <div class="flex items-center w-full mt-4 text-xs font-medium text-gray-600">
-              <div class="flex items-center">
+            <div class="flex items-center w-full mt-4 text-xs font-medium text-gray-600 ">
+              <div class="flex items-center topic">
                 <svg class="w-8 h-8 text-gray-300 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
                 </svg>
-                <h4 class="ml-1 leading-none"><strong>Type:</strong> {% if ticket.type == 'task' %}Task{% else %}Question{% endif %}</h4>
+                <h4 class="ml-1 leading-none "><strong>Type:</strong> {% if ticket.type == 'task' %}Task{% else %}Question{% endif %}</h4>
               </div>
               <div class="relative flex items-center ml-4">
                 <svg class="relative w-8 h-8 text-gray-300 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -189,6 +248,22 @@ body {
       </div>
             {% endfor %}
     </div>
+          </div>
+          <div class="pane right">
+            <div class="gutter"></div>
+          
+            <div class="flex items-center gap-2">
+              <h1>Component</h1>
+              <h1 class="card_title"></h1>
+            </div>
+            <div class="flex items-center gap-2">
+              <h1>Assigned to</h1>
+            <h1 class="card_desc"></h1>
+          </div>
+          <h1 class="card_type"></h1>
+  </div>
+</div>
+      </div>
       
       <div class="flex-shrink-0 w-6"></div>
     </div>
@@ -265,6 +340,56 @@ window.addEventListener("load", () => {
   }
 });
 
+// handle card click
+const cards = document.querySelectorAll('.ticket-item');
+const cardTitle = document.querySelector('.card_title');
+const cardDesc = document.querySelector('.card_desc');
+const cardType = document.querySelector('.card_type');
+
+cards.forEach(card => {
+  card.addEventListener('click', () => {
+    const componentText = card.querySelector('.component').textContent;
+    const descriptionText = card.querySelector('.descpription').textContent;
+    const topicText = card.querySelector('.topic').textContent;
+    
+    cardTitle.textContent = componentText;
+    cardDesc.textContent = descriptionText;
+    cardType.textContent = topicText;
+  });
+});
+
+
+
+const leftPane = document.querySelector(".left");
+const rightPane = document.querySelector(".right");
+const gutter = document.querySelector(".gutter");
+
+
+function resizer(e) {
+  
+  window.addEventListener('mousemove', mousemove);
+  window.addEventListener('mouseup', mouseup);
+  
+  let prevX = e.x;
+  const leftPanel = leftPane.getBoundingClientRect();
+  
+  
+  function mousemove(e) {
+    let newX = prevX - e.x;
+    leftPane.style.width = leftPanel.width - newX + "px";
+  }
+  
+  function mouseup() {
+    window.removeEventListener('mousemove', mousemove);
+    window.removeEventListener('mouseup', mouseup);
+    
+  }
+  
+  
+}
+
+
+gutter.addEventListener('mousedown', resizer);
 
 </script>
 
