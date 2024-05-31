@@ -11,6 +11,7 @@ from .models import Profiles
 
 
 
+
 '''class LoginForm(AuthenticationForm):
     pass'''
 
@@ -80,6 +81,7 @@ class CommentFileForm(forms.ModelForm):
     class Meta:
         model = CommentFile
         fields = ['file']
+
 
 
 class SendTicketForm(forms.Form):

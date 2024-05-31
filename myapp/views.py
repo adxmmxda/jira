@@ -311,11 +311,11 @@ def add_comment(request, ticket_id):
     comments_page = paginator.get_page(page_number)
 
     group_name = None
-    groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']  # Список всех групп
+    groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']
     for group in groups:
-        if getattr(user_profile, group):  # Проверяем, состоит ли пользователь в текущей группе
+        if getattr(user_profile, group):
             group_name = group
-            break  # Если пользователь состоит в группе, выходим из цикла
+            break
 
     tickets = Ticket.objects.filter(created_by=user)
 
@@ -353,8 +353,9 @@ def add_comment(request, ticket_id):
         'comments': comments_page,
         'comment_form': comment_form,
         'file_form': file_form,
-        'tickets': tickets,  # Передаем список тикетов в контекст
+        'tickets': tickets,
     })
+
 @login_required
 def team_project(request):
     user_profile = UserProfile.objects.get(user=request.user)
