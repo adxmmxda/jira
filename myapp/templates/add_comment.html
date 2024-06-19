@@ -509,6 +509,7 @@ body {
                 </div>              
               
                 <form method="post" enctype="multipart/form-data" action="{% url 'add_comment' ticket_id=ticket.id %}?page=1">     
+                {% csrf_token %}
                   <hr/>
                   <h2>Тикет: {{ ticket.title }}</h2>
                 <label for="comment-textarea" class="form-label"></label>
