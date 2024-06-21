@@ -39,17 +39,7 @@ class TicketForm(forms.ModelForm):
                 ('vasl', 'Vasl')
             ]
         else:
-            group_choices = [('spitamen', 'Public')]
-            if user_profile.sbt:
-                group_choices.append(('sbt', 'Private'))
-            if user_profile.matin:
-                group_choices.append(('matin', 'Private'))
-            if user_profile.ssb:
-                group_choices.append(('ssb', 'Private'))
-            if user_profile.sarvat:
-                group_choices.append(('sarvat', 'Private'))
-            if user_profile.vasl:
-                group_choices.append(('vasl', 'Private'))
+            group_choices = [('spitamen', 'Spitamen')]
         
         self.fields['group'].choices = group_choices
 

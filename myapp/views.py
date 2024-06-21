@@ -211,22 +211,27 @@ def my_view(request):
 @login_required
 def tickets(request):
     user_profile = UserProfile.objects.get(user=request.user)
+
     if request.method == 'POST':
         form = TicketForm(request.POST, request=request)
         if form.is_valid():
             ticket = form.save(commit=False)
             ticket.created_by = request.user
             ticket.save()
-            # Добавьте тикет к текущему пользователю
             ticket.assigned_to.add(request.user)
-            
-            # После создания тикета, его статус должен быть установлен как "Открыт"
             ticket.status = 'open'
             ticket.save()
-    
-            return redirect('user_tickets')  # Редирект на страницу с тикетами пользователя
+
+            # Получаем последний созданный тикет
+
+
+            ticket.assigned_to.add(request.user)
     else:
         form = TicketForm(request=request)
+
+    # Получаем последний созданный тикет для отображения ссылки
+    last_ticket = Ticket.objects.filter(created_by=request.user).order_by('-created_at').first()
+
     return render(request, 'tickets.html', {
         'form': form,
         'spitamen': user_profile.spitamen,
@@ -234,9 +239,9 @@ def tickets(request):
         'matin': user_profile.matin,
         'ssb': user_profile.ssb,
         'sarvat': user_profile.sarvat,
-        'vasl': user_profile.vasl
+        'vasl': user_profile.vasl,
+        'last_ticket': last_ticket  # Передаем последний созданный тикет в контекст
     })
-
 
 
 
@@ -297,6 +302,7 @@ from django.core.paginator import Paginator
 
 from django.utils import timezone
 
+from django.db.models import Q
 @login_required
 def add_comment(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
@@ -310,6 +316,7 @@ def add_comment(request, ticket_id):
     page_number = request.GET.get('page')
     comments_page = paginator.get_page(page_number)
 
+    # Получаем группу текущего пользователя
     group_name = None
     groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']
     for group in groups:
@@ -317,7 +324,20 @@ def add_comment(request, ticket_id):
             group_name = group
             break
 
-    tickets = Ticket.objects.filter(created_by=user)
+    # Фильтруем тикеты, чтобы отображались те, которые созданы текущим пользователем
+    tickets_created = Ticket.objects.filter(created_by=user)
+
+    # Фильтруем тикеты, которые отправлены текущему пользователю
+    tickets_received = Ticket.objects.filter(sent_to=user)
+
+    # Фильтруем тикеты, видимые группе текущего пользователя
+    if group_name:
+        group_tickets = Ticket.objects.filter(group=group_name)
+    else:
+        group_tickets = Ticket.objects.none()  # Если нет группы пользователя, пустой queryset
+
+    # Объединяем все отфильтрованные тикеты, удаляем дубликаты с помощью distinct()
+    tickets = (tickets_created | tickets_received | group_tickets).distinct()
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
@@ -349,13 +369,14 @@ def add_comment(request, ticket_id):
         file_form = CommentFileForm()
 
     return render(request, 'add_comment.html', {
+        'tickets_created': tickets_created,
+        'tickets_received': tickets_received,
         'ticket': ticket,
         'comments': comments_page,
         'comment_form': comment_form,
         'file_form': file_form,
         'tickets': tickets,
     })
-
 @login_required
 def team_project(request):
     user_profile = UserProfile.objects.get(user=request.user)
@@ -450,6 +471,7 @@ def profile_modal(request):
 from .forms import ProfileForm  
 
 def profile_view(request):
+    
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():

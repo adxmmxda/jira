@@ -28,6 +28,7 @@ urlpatterns = [
     path('user_tickets/profile.html', views.profile_view, name='profile_view'),
     path('add_comment/profile.html', views.profile_view, name='profile_view'),
     path('team_project/', views.team_project, name='team_project'),
+    path('add_comment/<int:ticket_id>/profile.html', views.profile_view, name='profile'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:

@@ -285,6 +285,7 @@ body {
 }
 }
 </style>
+
 <div class="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
     <div class="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
       <a class="bl_headerUtils_logo" href="https://www.spitamenbank.tj/"><img src="https://www.spitamenbank.tj/local/templates/sb-main-template/img/logo/logo-horizontal-ru.svg" ></a>
@@ -294,14 +295,17 @@ body {
       <!-- <input class="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring" type="search" placeholder="Search for anything…"> -->
       <div class="ml-10">
           <a class="mx-2 text-sm font-semibold text-indigo-700" href="{% url 'tickets' %}">Add Ticket</a>
-          <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'user_tickets' %}">Projects</a>
-          <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'team_project' %}">        
+          <!-- <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'user_tickets' %}">Projects</a> -->
+          {% if last_ticket %}
+          <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'add_comment' ticket_id=last_ticket.id %}">Projects</a>
+          {% endif %}            
+          <!-- <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'team_project' %}">        
             {% if spitamen %} Spitamen {% endif %}
             {% if sbt %} Sbt {% endif %}
             {% if matin %} Matin {% endif %}
             {% if ssb %} Ssb{% endif %}
             {% if sarvat %} Sarvat {% endif %}
-            {% if vasl %} Vasl {% endif %} Projects</a>
+            {% if vasl %} Vasl {% endif %} Projects</a> -->
             <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'login' %}">Logout</a>
       </div>
       <div id="clock">
