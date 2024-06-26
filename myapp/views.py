@@ -46,6 +46,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Ticket
 from .forms import TicketForm
+import os
 
 
 logger = logging.getLogger(__name__)
@@ -217,15 +218,41 @@ def tickets(request):
         if form.is_valid():
             ticket = form.save(commit=False)
             ticket.created_by = request.user
+            # Определяем группу пользователя, создающего тикет
+            groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']
+            for group in groups:
+                if getattr(user_profile, group):
+                    ticket.created_by_group = group
+                    break
             ticket.save()
             ticket.assigned_to.add(request.user)
             ticket.status = 'open'
             ticket.save()
 
-            # Получаем последний созданный тикет
+            # Если пользователь из одной группы создал тикет для другой группы
+            for group in groups:
+                if getattr(user_profile, group) and ticket.group != group:
+                    # Получаем всех пользователей из группы создателя
+                    group_users = User.objects.filter(**{f"userprofile__{group}": True})
+                    for user in group_users:
+                        ticket.sent_to.add(user)
 
+            ticket.save()
+            form.save_m2m()  # Сохранить многие ко многим после сохранения тикета
 
-            ticket.assigned_to.add(request.user)
+            # Получаем последний созданный тикет для отображения ссылки
+            last_ticket = Ticket.objects.filter(created_by=request.user).order_by('-created_at').first()
+            return render(request, 'tickets.html', {
+                'form': form,
+                'spitamen': user_profile.spitamen,
+                'sbt': user_profile.sbt,
+                'matin': user_profile.matin,
+                'ssb': user_profile.ssb,
+                'sarvat': user_profile.sarvat,
+                'vasl': user_profile.vasl,
+                'last_ticket': last_ticket,  # Передаем последний созданный тикет в контекст
+                'tickets': tickets,
+            })
     else:
         form = TicketForm(request=request)
 
@@ -242,8 +269,6 @@ def tickets(request):
         'vasl': user_profile.vasl,
         'last_ticket': last_ticket  # Передаем последний созданный тикет в контекст
     })
-
-
 
 
 from django.shortcuts import render, redirect
@@ -303,11 +328,14 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 
 from django.db.models import Q
+
+
+
 @login_required
 def add_comment(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     user = request.user
-    user_profile = UserProfile.objects.get(user=request.user)
+    user_profile = UserProfile.objects.get(user=user)
 
     comments_per_page = 12
     comments = Comment.objects.filter(ticket=ticket).order_by('-created_at')
@@ -316,7 +344,6 @@ def add_comment(request, ticket_id):
     page_number = request.GET.get('page')
     comments_page = paginator.get_page(page_number)
 
-    # Получаем группу текущего пользователя
     group_name = None
     groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']
     for group in groups:
@@ -324,19 +351,14 @@ def add_comment(request, ticket_id):
             group_name = group
             break
 
-    # Фильтруем тикеты, чтобы отображались те, которые созданы текущим пользователем
     tickets_created = Ticket.objects.filter(created_by=user)
-
-    # Фильтруем тикеты, которые отправлены текущему пользователю
     tickets_received = Ticket.objects.filter(sent_to=user)
 
-    # Фильтруем тикеты, видимые группе текущего пользователя
     if group_name:
         group_tickets = Ticket.objects.filter(group=group_name)
     else:
-        group_tickets = Ticket.objects.none()  # Если нет группы пользователя, пустой queryset
+        group_tickets = Ticket.objects.none()
 
-    # Объединяем все отфильтрованные тикеты, удаляем дубликаты с помощью distinct()
     tickets = (tickets_created | tickets_received | group_tickets).distinct()
 
     if request.method == 'POST':
@@ -377,6 +399,7 @@ def add_comment(request, ticket_id):
         'file_form': file_form,
         'tickets': tickets,
     })
+
 @login_required
 def team_project(request):
     user_profile = UserProfile.objects.get(user=request.user)
@@ -471,7 +494,6 @@ def profile_modal(request):
 from .forms import ProfileForm  
 
 def profile_view(request):
-    
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -479,4 +501,8 @@ def profile_view(request):
             return redirect('profile')  
     else:
         form = ProfileForm()
-    return render(request, 'profile.html', {'form': form})
+    
+    # Получение всех тикетов
+    tickets = Ticket.objects.all()
+    
+    return render(request, 'profile.html', {'form': form, 'tickets': tickets})

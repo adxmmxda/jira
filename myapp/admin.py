@@ -11,10 +11,14 @@ class SendTicketForm(forms.ModelForm):
         fields = '__all__'
 
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ('title', 'topic', 'created_by', 'created_at', 'assigned_to_display')
+    list_display = ('id_and_title','title', 'topic', 'created_by', 'created_at', 'assigned_to_display')
     list_filter = ('created_by', 'assigned_to')
     search_fields = ('title', 'topic', 'description')
     filter_horizontal = ('assigned_to',)
+
+    def id_and_title(self, obj):
+        return f"{obj.id} - {obj.title}"
+    id_and_title.short_description = 'ID - Title'
 
     def save_model(self, request, obj, form, change):
         if not change:

@@ -48,11 +48,16 @@ class Ticket(models.Model):
     sent_to = models.ManyToManyField(User, related_name='received_tickets', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     assigned_to = models.ManyToManyField(User, related_name='assigned_tickets', blank=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')  
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     group = models.CharField(max_length=20, choices=GROUP_CHOICES)
-    
+    created_by_group = models.CharField(max_length=20, choices=GROUP_CHOICES, null=True, blank=True)
+
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.id}"
+    
+    @property
+    def get_group_display(self):
+        return dict(self.GROUP_CHOICES).get(self.group)
         
 from django.shortcuts import render
 from .models import Ticket
@@ -87,6 +92,7 @@ class Project(models.Model):
     name = models.CharField(max_length=200)
 
 class UserProfile(models.Model):
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     spitamen = models.BooleanField(default=False)
     sbt = models.BooleanField(default=False)

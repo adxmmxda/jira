@@ -69,7 +69,7 @@ margin-left: 640px;
 }
 
 	</style>
-<div class="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr from-blue-200 via-indigo-200 to-pink-200">
+<div class="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr ">
     <div class="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
       <a class="bl_headerUtils_logo" href="https://www.spitamenbank.tj/"><img src="https://www.spitamenbank.tj/local/templates/sb-main-template/img/logo/logo-horizontal-ru.svg" ></a>
       <svg class="w-8" xmlns="" fill="none" viewBox="" stroke="currentColor">
@@ -78,7 +78,11 @@ margin-left: 640px;
       <!-- <input class="flex items-center h-10 px-4 ml-10 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring" type="search" placeholder="Search for anything…"> -->
       <div class="ml-10">
           <a class="mx-2 text-sm font-semibold text-indigo-700" href="{% url 'tickets' %}">Add Ticket</a>
-          <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'user_tickets' %}">Projects</a>
+		  {% if tickets.exists %}
+		  <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'add_comment' ticket_id=tickets.0.id %}">Projects</a>
+		  {% endif %}
+		  
+			  
         <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'login' %}">Logout</a>
       </div>
       <div id="clock">
