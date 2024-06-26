@@ -2,9 +2,10 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/motion-tailwind/motion-tailwind.css">
-    
+{% load static %}    
 </head>
 <style>
+
 .container {
     max-width: 480px; /* Максимальная ширина контейнера */
     margin: 0 auto; /* Центрирование контейнера */
@@ -17,6 +18,17 @@
     margin-top: -70px;
     margin-left: -40px;
     padding-bottom: 50px;
+}
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    background-image: url(/static/css/rm141-nunny-02b.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 </style>
