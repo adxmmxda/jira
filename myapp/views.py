@@ -230,29 +230,20 @@ def tickets(request):
             ticket.save()
 
             # Если пользователь из одной группы создал тикет для другой группы
-            for group in groups:
-                if getattr(user_profile, group) and ticket.group != group:
-                    # Получаем всех пользователей из группы создателя
-                    group_users = User.objects.filter(**{f"userprofile__{group}": True})
-                    for user in group_users:
-                        ticket.sent_to.add(user)
+            # for group in groups:
+            #     if getattr(user_profile, group) and ticket.group != group:
+            #         # Получаем всех пользователей из группы создателя
+            #         group_users = User.objects.filter(**{f"userprofile__{group}": True})
+            #         for user in group_users:
+            #             ticket.sent_to.add(user)
 
-            ticket.save()
-            form.save_m2m()  # Сохранить многие ко многим после сохранения тикета
+            # ticket.save()
+            # form.save_m2m()  # Сохранить многие ко многим после сохранения тикета
 
             # Получаем последний созданный тикет для отображения ссылки
             last_ticket = Ticket.objects.filter(created_by=request.user).order_by('-created_at').first()
-            return render(request, 'tickets.html', {
-                'form': form,
-                'spitamen': user_profile.spitamen,
-                'sbt': user_profile.sbt,
-                'matin': user_profile.matin,
-                'ssb': user_profile.ssb,
-                'sarvat': user_profile.sarvat,
-                'vasl': user_profile.vasl,
-                'last_ticket': last_ticket,  # Передаем последний созданный тикет в контекст
-                'tickets': tickets,
-            })
+            return redirect('add_comment', ticket_id=ticket.id)  
+
     else:
         form = TicketForm(request=request)
 
