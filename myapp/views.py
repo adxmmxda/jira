@@ -212,6 +212,7 @@ def my_view(request):
 @login_required
 def tickets(request):
     user_profile = UserProfile.objects.get(user=request.user)
+    groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']
 
     if request.method == 'POST':
         form = TicketForm(request.POST, request=request)
@@ -219,14 +220,20 @@ def tickets(request):
             ticket = form.save(commit=False)
             ticket.created_by = request.user
             # Определяем группу пользователя, создающего тикет
-            groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']
+            created_by_group = None
             for group in groups:
                 if getattr(user_profile, group):
-                    ticket.created_by_group = group
+                    created_by_group = group
                     break
+            ticket.created_by_group = created_by_group
             ticket.save()
             ticket.assigned_to.add(request.user)
             ticket.status = 'open'
+            ticket.save()
+
+            # Добавляем всех пользователей из группы создателя тикета и целевой группы
+            created_by_group_users = User.objects.filter(**{f'userprofile__{created_by_group}': True})
+            target_group_users = User.objects.filter(**{f'userprofile__{ticket.group}': True})
             ticket.save()
 
             return redirect('add_comment', ticket_id=ticket.id)
@@ -235,10 +242,11 @@ def tickets(request):
         form = TicketForm(request=request)
 
     # Определяем группы текущего пользователя
-    user_groups = [group for group in ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl'] if getattr(user_profile, group)]
+    user_groups = [group for group in groups if getattr(user_profile, group)]
 
-    # Получаем тикеты для группы текущего пользователя
-    group_tickets = Ticket.objects.filter(group__in=user_groups).order_by('-created_at')
+    # Получаем тикеты для группы текущего пользователя и созданные текущим пользователем
+    group_tickets = Ticket.objects.filter(group__in=user_groups) | Ticket.objects.filter(created_by_group__in=user_groups)
+    group_tickets = group_tickets.distinct().order_by('-created_at')
 
     return render(request, 'tickets.html', {
         'form': form,
@@ -325,22 +333,17 @@ def add_comment(request, ticket_id):
     page_number = request.GET.get('page')
     comments_page = paginator.get_page(page_number)
 
-    group_name = None
     groups = ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl']
-    for group in groups:
-        if getattr(user_profile, group):
-            group_name = group
-            break
+    user_groups = [group for group in groups if getattr(user_profile, group)]
 
+    # Получаем тикеты для групп пользователя
     tickets_created = Ticket.objects.filter(created_by=user)
     tickets_received = Ticket.objects.filter(sent_to=user)
+    group_tickets_created = Ticket.objects.filter(created_by_group__in=user_groups)
+    group_tickets_received = Ticket.objects.filter(group__in=user_groups)
 
-    if group_name:
-        group_tickets = Ticket.objects.filter(group=group_name)
-    else:
-        group_tickets = Ticket.objects.none()
-
-    tickets = (tickets_created | tickets_received | group_tickets).distinct()
+    # Объединяем все релевантные тикеты
+    tickets = (tickets_created | tickets_received | group_tickets_created | group_tickets_received).distinct()
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
