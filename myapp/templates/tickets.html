@@ -288,6 +288,7 @@ body {
 .backg {
     background-color: #e7f0f1;
 }
+
 </style>
 
 <div class="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr bg-white">
@@ -300,9 +301,10 @@ body {
       <div class="ml-10">
           <a class="mx-2 text-sm font-semibold text-indigo-700" href="{% url 'tickets' %}">Add Ticket</a>
           <!-- <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'user_tickets' %}">Projects</a> -->
-          {% if last_ticket %}
-          <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'add_comment' ticket_id=last_ticket.id %}">Projects</a>
-          {% endif %}            
+
+          {% if group_tickets %}
+          <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'add_comment' ticket_id=group_tickets.first.id %}">Projects</a>
+        {% endif %}
           <!-- <a class="mx-2 text-sm font-semibold text-gray-600 hover:text-indigo-700" href="{% url 'team_project' %}">        
             {% if spitamen %} Spitamen {% endif %}
             {% if sbt %} Sbt {% endif %}

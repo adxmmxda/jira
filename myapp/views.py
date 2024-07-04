@@ -229,26 +229,16 @@ def tickets(request):
             ticket.status = 'open'
             ticket.save()
 
-            # Если пользователь из одной группы создал тикет для другой группы
-            # for group in groups:
-            #     if getattr(user_profile, group) and ticket.group != group:
-            #         # Получаем всех пользователей из группы создателя
-            #         group_users = User.objects.filter(**{f"userprofile__{group}": True})
-            #         for user in group_users:
-            #             ticket.sent_to.add(user)
-
-            # ticket.save()
-            # form.save_m2m()  # Сохранить многие ко многим после сохранения тикета
-
-            # Получаем последний созданный тикет для отображения ссылки
-            last_ticket = Ticket.objects.filter(created_by=request.user).order_by('-created_at').first()
-            return redirect('add_comment', ticket_id=ticket.id)  
+            return redirect('add_comment', ticket_id=ticket.id)
 
     else:
         form = TicketForm(request=request)
 
-    # Получаем последний созданный тикет для отображения ссылки
-    last_ticket = Ticket.objects.filter(created_by=request.user).order_by('-created_at').first()
+    # Определяем группы текущего пользователя
+    user_groups = [group for group in ['spitamen', 'sbt', 'matin', 'ssb', 'sarvat', 'vasl'] if getattr(user_profile, group)]
+
+    # Получаем тикеты для группы текущего пользователя
+    group_tickets = Ticket.objects.filter(group__in=user_groups).order_by('-created_at')
 
     return render(request, 'tickets.html', {
         'form': form,
@@ -258,7 +248,7 @@ def tickets(request):
         'ssb': user_profile.ssb,
         'sarvat': user_profile.sarvat,
         'vasl': user_profile.vasl,
-        'last_ticket': last_ticket  # Передаем последний созданный тикет в контекст
+        'group_tickets': group_tickets  # Передаем тикеты для группы пользователя в контекст
     })
 
 
