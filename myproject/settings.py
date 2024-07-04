@@ -25,11 +25,8 @@ SECRET_KEY = 'django-insecure-6(!iuo4m)p#-zvsj%l^w*sn*vqake4xa-87)@3v4&i+u=z_&4b
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = [
-    '51.21.150.64'
-]
 
-CSRF_TRUSTED_ORIGINS = ['http://51.21.150.64', 'https://51.21.150.64']
+ALLOWED_HOSTS = []
 
 
 
@@ -57,13 +54,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
 ROOT_URLCONF = 'myproject.urls'
 ADMIN_EMAIL = 'akramzodanodir5@gmail.com'
-CSRF_COOKIE_HTTPONLY = False
-
 
 TEMPLATES = [
     {
@@ -112,6 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
